@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 [{"name":"Bryce Taylor", "password": "1234"},{"name":"Travis Alexander", "password":"4321"}]
+=======
+[{"name": "Bryce Taylor", "password": "12345"}, {"name": "Travis Alexander", "password": "54321"}]
+>>>>>>> a4f0fb1351d78473c16e7f363e4dea375475d8be
