@@ -7,6 +7,8 @@ We thought back to Ethan's last unit project where users had the ability to sign
 ## Core User Workflows
 The core workflow would be users being able to create an account and look up information about jobs they are interested in. There would also be an admin feature where you could see the users who have signed up for the application and see the data on them.
 
+Admins will have the ability to add job listings
+
 ## Daily Goals
 - Tuesday's goal is to build the sign-in/sign-up application and add admin access. 
 - Wednesday's goal would be to set up the job listings and add access to it for users. 
