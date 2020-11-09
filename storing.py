@@ -6,8 +6,11 @@ con = sqlite3.connect('store-data-info.db')
 cur = con.cursor()
 
 try:
-    cur.execute('CREATE TABLE Gender (Male TEXT, Women TEXT, Other TEXT')
+    cur.execute('CREATE TABLE Person (Name TEXT, Email TEXT, Phone_number TEXT, Place TEXT, Job TEXT, Gender TEXT')
+except:
+    pass
 
-class Person:
-    def gender(g):
-        if 
+
+class Admin:
+    def 
+        
