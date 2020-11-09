@@ -9,32 +9,24 @@ try:
     cur.execute('CREATE TABLE Person (Name TEXT, Age INTEGER, Email TEXT, Phone_number TEXT, Place TEXT, Job TEXT, Gender TEXT')
 except:
     pass
-<<<<<<< HEAD
-
-=======
->>>>>>> a4f0fb1351d78473c16e7f363e4dea375475d8be
 ADMIN = []
 with open("admin.json") as admin_file:
     READER = json.load(admin_file)
     for entry in READER:
-        ADMIN.append(entry["name"])
-<<<<<<< HEAD
-    
-=======
+        ADMIN.append((entry["name"], entry["password"]))
+        
 
 
 
->>>>>>> a4f0fb1351d78473c16e7f363e4dea375475d8be
+
 
 class Admin:
-    def __init__(self, name):
-        self.name = name
-        self.is_valid = name in ADMIN
+    def __init__(self, log_in):
+        self.log_in = log_in
+        self.is_valid = log_in in ADMIN
 
     def __str__(self):
-        return self.name
-<<<<<<< HEAD
-=======
+        return self.log_in
 
 print(ADMIN)
 
@@ -109,4 +101,3 @@ states = [("Alabama", "AL"),
 ("Wisconsin", "WI"),
 ("Wyoming", "WY")]
 
->>>>>>> a4f0fb1351d78473c16e7f363e4dea375475d8be
