@@ -10,7 +10,14 @@ try:
 except:
     pass
 
+with open("admin.json") as admin_file:
+    ADMIN = json.load(admin_file)
 
 class Admin:
-    def 
-        
+    def __init__(self, name):
+        self.name = name
+        self.is_valid = name in ADMIN
+
+    def __str__(self):
+        return self.name
+
