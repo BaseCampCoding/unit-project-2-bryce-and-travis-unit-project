@@ -40,11 +40,17 @@ elif sign_in == "Admin":
             break
         else:
             print("Please enter a numerical value.")
+
     email = input("Email: ")
 
     cell = input("Phone number: ")
 
-    place = input("What state do you live in: ")
+    while True:
+        place = input("What state do you live in: ")
+        while place not in states:
+            print("Please check spelling.")
+        
+
 
     gender = input("Gender: ")
 
