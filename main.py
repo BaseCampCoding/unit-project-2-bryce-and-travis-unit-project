@@ -1,3 +1,6 @@
+import storing
+from storing import Admin
+
 print(f"Welcome to Ndeed")
 
 sign_in_up = ["sign in", "sign up", "sign out"]

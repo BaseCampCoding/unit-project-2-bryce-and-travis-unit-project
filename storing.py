@@ -10,8 +10,12 @@ try:
 except:
     pass
 
+ADMIN = []
 with open("admin.json") as admin_file:
-    ADMIN = json.load(admin_file)
+    READER = json.load(admin_file)
+    for entry in READER:
+        ADMIN.append(entry["name"])
+    
 
 class Admin:
     def __init__(self, name):
@@ -20,4 +24,3 @@ class Admin:
 
     def __str__(self):
         return self.name
-
