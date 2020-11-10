@@ -5,10 +5,8 @@ con = sqlite3.connect('store-data-info.db')
 
 cur = con.cursor()
 
-try:
-    cur.execute('CREATE TABLE Person (Name TEXT, Age INTEGER, Email TEXT, Phone_number TEXT, Place TEXT, Job TEXT, Gender TEXT')
-except:
-    pass
+cur.execute('CREATE TABLE IF NOT EXISTS Person (Name TEXT, Age INTEGER, Email TEXT, Phone_number TEXT, Place TEXT, Job TEXT, Gender TEXT)')
+
 ADMIN = []
 with open("admin.json") as admin_file:
     READER = json.load(admin_file)
@@ -86,3 +84,7 @@ states = [("Alabama", "AL"),
 ("Wisconsin", "WI"),
 ("Wyoming", "WY")]
 
+all_states = []
+for state in states:
+    for word in state:
+        all_states.append(word.lower())
