@@ -26,7 +26,7 @@ elif sign_in == "admin":
     print("Enter your Admin account")
     name = input("Name: ")
     password = input("Password: ")
-    account = [name, password]
+    account = Admin([name, password])
     if account.is_valid:
         print("yay")
     else:
