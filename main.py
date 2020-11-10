@@ -118,7 +118,9 @@ while True:
             cur.execute('SELECT * FROM Person')
             for row in cur.fetchall():
                 print(row)
+            break
         
+print(2+2)
 
 
 
