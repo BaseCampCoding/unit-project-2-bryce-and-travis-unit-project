@@ -3,9 +3,12 @@ from storing import *
 
 
 
-# def customer():
-#     check job listings
-#     pass
+def customer():
+    with open('jobs.json') as json_file:
+        JOB_LIST = json.load(json_file)
+
+    user_options = ["view jobs", "update profile"]
+
 
 # def admin():
 #     customer()
