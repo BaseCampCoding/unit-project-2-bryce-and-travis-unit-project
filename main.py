@@ -54,13 +54,24 @@ while True:
             - Sign in
             - Sign up
         """).lower()
+    while sign_in not in sign_in_options:
+        print("Invalid choice")
+        sign_in = input("""
+        Do you want to
+            - Sign in
+            - Sign up
+        """).lower()
+        if sign_in in sign_in_options:
+            break
     
     if sign_in == "sign in":
         print("Sign in your account")
         username = input("Username: ")
+        if username == "quit":
+            break
         password = input("Password: ")
         log = User(username, password)
-        if username == "quit" or password == "quit":
+        if password == "quit":
             break
         if log.is_valid:
             print(f"Welcome {name}")
@@ -107,6 +118,11 @@ while True:
             email = input("Email: ")
             if email == "quit":
                 break
+            cur.execute('SELECT email FROM Person WHERE email = ?', (email,))
+            cur.fetchall()
+            if email != []:
+                print("That email is already being used! You should sign in.")
+                break
 
             while True:    
                 cell = input("Phone number: (digits only) ")
@@ -117,7 +133,10 @@ while True:
                     break
                 else:
                     print("Please enter a 10 digit cell phone number.")
-    
+            
+            if cell == "quit":
+                    break
+
             place = input("What state do you live in: ").lower()
             if place == "quit":
                 break
