@@ -3,9 +3,12 @@ from storing import *
 
 
 
-# def customer():
-#     check job listings
-#     pass
+def customer():
+    with open('jobs.json') as json_file:
+        JOB_LIST = json.load(json_file)
+
+    user_options = ["view jobs", "update profile"]
+
 
 # def admin():
 #     customer()
@@ -114,6 +117,7 @@ while True:
             password = input("Please enter a password for your account: ")
             if password == "quit":
                 break
+            cur.execute('INSERT INTO log_in VALUES (?, ?)', (name, password)
             cur.execute('INSERT INTO Person VALUES (?, ?, ?, ?, ?, ?, ?)', (name, age, email, str(cell), place, job, gender))
             cur.execute('SELECT * FROM Person')
             for row in cur.fetchall():
