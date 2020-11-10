@@ -116,13 +116,13 @@ while True:
             if age == "quit":
                 break
             email = input("Email: ")
-            # if email == "quit":
-            #     break
-            # cur.execute('SELECT email FROM Person WHERE email = ?', (email,))
-            # cur.fetchall()
-            # if email != []:
-            #     print("That email is already being used! You should sign in.")
-            #     break
+            if email == "quit":
+                break
+            cur.execute('SELECT email FROM Person WHERE email = ?', (email,))
+            emails = cur.fetchall()
+            if emails != []:
+                print("That email is already being used! You should sign in.")
+                break
 
             while True:    
                 cell = input("Phone number: (digits only) ")
