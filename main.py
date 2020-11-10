@@ -1,6 +1,5 @@
-import json
+
 from storing import *
-import pprint
 
 
 
@@ -9,19 +8,6 @@ def customer():
         JOB_LIST = json.load(json_file)
 
     user_options = ["view jobs", "update profile"]
-    choice = input("""
-    Do you want to
-        -View Jobs
-        -Update Profile
-    """).lower()
-    while choice not in user_options:
-        print(f"{choice} is not a valid option.")
-        if choice in user_options:
-            break
-    
-    if choice == "view jobs":
-        for entry in JOB_LIST:
-            print(entry)
 
 
 # def admin():
@@ -54,12 +40,11 @@ while True:
         print("Sign in your account")
         name = input("Name: ")
         password = input("Password: ")
-        log = User(name, password)
+        log = User([name, password])
         if name == "quit" or password == "quit":
             break
-        if log.is_valid:
+        elif log.is_valid:
             print(f"Welcome {name}")
-            customer()
             break
         else:
             print("This account doesn't exist.")
@@ -130,14 +115,14 @@ while True:
             if gender != "male" or gender != "female":
                 gender = "other"
 
-            username = input("\nPlease enter in a username: ")
             password = input("Please enter a password for your account: ")
             if password == "quit":
                 break
-            cur.execute('INSERT INTO log_in VALUES (?, ?)', (username, password))
+            cur.execute('INSERT INTO Log_in VALUES (?, ?)',(name, password))
             cur.execute('INSERT INTO Person VALUES (?, ?, ?, ?, ?, ?, ?)', (name, age, email, str(cell), place, job, gender))
             cur.execute('SELECT * FROM Person')
-            con.commit()
+            for row in cur.fetchall():
+                print(row)
             break
         
 print(2+2)
