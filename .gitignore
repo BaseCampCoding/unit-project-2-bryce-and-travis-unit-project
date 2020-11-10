@@ -5,3 +5,6 @@
 .vscode/settings.json
 __pycache__/storing.cpython-38.pyc
 settings.json
+.vscode/settings.json
+store-data-info.db
+store-data-info.db
