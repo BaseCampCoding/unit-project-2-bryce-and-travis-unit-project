@@ -40,7 +40,7 @@ while True:
         print("Sign in your account")
         name = input("Name: ")
         password = input("Password: ")
-        log = User([name, password])
+        log = User(name, password)
         if name == "quit" or password == "quit":
             break
         elif log.is_valid:
