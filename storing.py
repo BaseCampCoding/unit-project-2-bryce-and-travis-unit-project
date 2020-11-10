@@ -28,7 +28,7 @@ class Admin:
 
 print(ADMIN)
 
-
+cur.execute("CREATE TABLE IF NOT EXISTS Log_in (name TEXT, password TEXT)")
 
 
 
