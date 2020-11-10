@@ -1,6 +1,19 @@
 import storing
 from storing import *
 
+
+
+def customer():
+    check job listings
+    pass
+
+def admin():
+    customer()
+
+    
+
+
+
 print(f"Welcome to Ndeed")
 
 sign_in_options = ["sign in", "sign up", "sign out"]
@@ -54,8 +67,13 @@ while True:
 
             email = input("Email: ")
 
-            cell = input("Phone number: ")
-
+            while True:    
+                cell = input("Phone number: (digits only) ")
+                if cell.isdigit() and len(list(cell)) == 10:
+                    cell = int(cell)
+                    break
+                else:
+                    print("Please enter a 10 digit cell phone number.")
     
             place = input("What state do you live in: ").lower()
             while place not in all_states:
@@ -70,8 +88,8 @@ while True:
             if gender != "male" or gender != "female":
                 gender = "other"
 
+            password = input("Please enter a password for your account: ")
 
-cur.execute('INSERT INTO Person VALUES (?, ?, ?, ?, ?, ?)', (name, age, email, cell, place, job, gender))
-cur.execute('SELECT * FROM Person')
-for row in cur.fetchall():
-    print(row)
+
+    cur.execute('INSERT INTO Person VALUES (?, ?, ?, ?, ?, ?, ?)', (name, age, email, str(cell), place, job, gender))
+
