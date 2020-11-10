@@ -20,6 +20,11 @@ while sign_in not in sign_in_options:
         """).lower()
 
 if sign_in == "sign in":
+    print("Sign in your account")
+    n = input("Name: ")
+    p = input("Password: ")
+    log = (n, p)
+    if log 
     print("signed in")
 
 elif sign_in == "admin":
