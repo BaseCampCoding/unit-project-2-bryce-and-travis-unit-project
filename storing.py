@@ -34,21 +34,6 @@ print(ADMIN)
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 cur.execute("CREATE TABLE IF NOT EXISTS States (name TEXT, abbreviation TEXT)")
 states = [("Alabama", "AL"),
 ("Alaska", "AK"),
