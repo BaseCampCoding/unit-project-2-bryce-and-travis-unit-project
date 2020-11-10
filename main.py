@@ -22,11 +22,11 @@ while sign_in not in sign_in_options:
 if sign_in == "sign in":
     print("signed in")
 
-elif sign_in == "Admin":
+elif sign_in == "admin":
     print("Enter your Admin account")
     name = input("Name: ")
     password = input("Password: ")
-    account = (name, password)
+    account = [name, password]
     if account.is_valid:
         print("yay")
     else:

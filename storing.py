@@ -13,7 +13,7 @@ ADMIN = []
 with open("admin.json") as admin_file:
     READER = json.load(admin_file)
     for entry in READER:
-        ADMIN.append((entry["name"], entry["password"]))
+        ADMIN.append([entry["name"], entry["password"]])
         
 
 
