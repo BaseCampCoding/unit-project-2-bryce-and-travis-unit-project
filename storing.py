@@ -16,10 +16,12 @@ with open("admin.json") as admin_file:
         
 
 class User:
-    def __init__ (self, name, password)
-    self.name = name
-    self.password = password
-    self.is_valid = cur.execute('SELECT name, password FROM log_in WHERE name = ? AND password = ?', (name, password))
+    def __init__ (self, name, password):
+        self.name = name
+        self.password = password
+        cur.execute('SELECT name, password FROM Log_in WHERE name = ? AND password = ?', (name, password))
+        user_check = cur.fetchall()
+        self.is_valid = user_check != []
 
 
 class Admin:
