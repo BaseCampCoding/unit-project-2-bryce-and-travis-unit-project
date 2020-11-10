@@ -22,7 +22,7 @@ while sign_in not in sign_in_options:
 if sign_in == "sign in":
     print("signed in")
 
-elif sign_in == "Admin":
+elif sign_in == "admin":
     print("Enter your Admin account")
     name = input("Name: ")
     password = input("Password: ")
@@ -46,15 +46,22 @@ elif sign_in == "sign up":
 
     cell = input("Phone number: ")
 
-    while True:
+    
+    place = input("What state do you live in: ").lower()
+    while place not in all_states:
+        print("Please check spelling.")
         place = input("What state do you live in: ")
-        while place not in states:
-            print("Please check spelling.")
-            place = input("What state do you live in: ")
+        if place in all_states:
+            break
         
 
-
+    job = None
     gender = input("Gender: ")
+    if gender != "male" or gender != "female":
+        gender = "other"
 
 
-
+cur.execute('INSERT INTO Person VALUES (?, ?, ?, ?, ?, ?)', (name, age, email, cell, place, job, gender))
+cur.execute('SELECT * FROM Person')
+for row in cur.fetchall():
+    print(row)
