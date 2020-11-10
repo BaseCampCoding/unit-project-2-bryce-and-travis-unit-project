@@ -49,7 +49,6 @@ sign_in_options = ["sign in", "sign up", "sign out"]
 
 
 while True:
-    
     sign_in = input("""
         Do you want to
             - Sign in
@@ -58,10 +57,10 @@ while True:
     
     if sign_in == "sign in":
         print("Sign in your account")
-        name = input("Name: ")
+        username = input("Username: ")
         password = input("Password: ")
-        log = User(name, password)
-        if name == "quit" or password == "quit":
+        log = User(username, password)
+        if username == "quit" or password == "quit":
             break
         if log.is_valid:
             print(f"Welcome {name}")
@@ -140,7 +139,7 @@ while True:
             password = input("Please enter a password for your account: ")
             if password == "quit":
                 break
-            cur.execute('INSERT INTO log_in VALUES (?, ?)', (username, password))
+            cur.execute('INSERT INTO log_in VALUES (?, ?, ?)', (name, username, password))
             cur.execute('INSERT INTO Person VALUES (?, ?, ?, ?, ?, ?, ?)', (name, age, email, str(cell), place, job, gender))
             cur.execute('SELECT * FROM Person')
             con.commit()
