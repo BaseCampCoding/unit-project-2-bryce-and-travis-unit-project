@@ -3,15 +3,15 @@ from storing import *
 
 print(f"Welcome to Ndeed")
 
-sign_in_options = ["sign in", "sign up", "sign out", "admin"]
-sign_in = input("""
-    Do you want to
-        - Sign in
-        - Sign up
-    """).lower()
+sign_in_options = ["sign in", "sign up", "sign out"]
+# sign_in = input("""
+#     Do you want to
+#         - Sign in
+#         - Sign up
+#     """).lower()
 
 
-while sign_in not in sign_in_options:
+while True:
     print("Not a valid option")
     sign_in = input("""
         Do you want to
@@ -19,51 +19,56 @@ while sign_in not in sign_in_options:
             - Sign up
         """).lower()
 
-if sign_in == "sign in":
-    print("Sign in your account")
-    n = input("Name: ")
-    p = input("Password: ")
-    log = (n, p)
-    print("signed in")
-
-elif sign_in == "admin":
-    print("Enter your Admin account")
-    name = input("Name: ")
-    password = input("Password: ")
-    account = Admin([name, password])
-    if account.is_valid:
-        print(f"Welcome{name}")
-        break
-    else:
-        print("Invaild account")
+    if sign_in == "sign in":
+        print("Sign in your account")
+        n = input("Name: ")
+        p = input("Password: ")
+        log = (n, p)
+        if log == Log_in:
+            print(f"Welcome {name}")
+        else:
+            print("This account doesn't exist.")
     
-elif sign_in == "sign up":
-    name = input("Full name: ")
-    while True:
-        age = input("Age: ")
-        if age.isdigit():
-            age = int(age)
+
+    elif sign_in == "admin":
+        print("Enter your Admin account")
+        name = input("Name: ")
+        password = input("Password: ")
+        account = Admin([name, password])
+        if account.is_valid:
+            print(f"Welcome {name}")
             break
         else:
-            print("Please enter a numerical value.")
+            print("Invaild account")
+    
+    elif sign_in == "sign up":
+        name = input("Full name: ")
+        while True:
+            age = input("Age: ")
+            if age.isdigit():
+                age = int(age)
+                break
+            else:
+                print("Please enter a numerical value.")
 
-    email = input("Email: ")
 
-    cell = input("Phone number: ")
+            email = input("Email: ")
+
+            cell = input("Phone number: ")
 
     
-    place = input("What state do you live in: ").lower()
-    while place not in all_states:
-        print("Please check spelling.")
-        place = input("What state do you live in: ")
-        if place in all_states:
-            break
+            place = input("What state do you live in: ").lower()
+            while place not in all_states:
+                print("Please check spelling.")
+                place = input("What state do you live in: ")
+                if place in all_states:
+                    break
         
 
-    job = None
-    gender = input("Gender: ")
-    if gender != "male" or gender != "female":
-        gender = "other"
+            job = None
+            gender = input("Gender: ")
+            if gender != "male" or gender != "female":
+                gender = "other"
 
 
 cur.execute('INSERT INTO Person VALUES (?, ?, ?, ?, ?, ?)', (name, age, email, cell, place, job, gender))
