@@ -74,6 +74,7 @@ while True:
         if password == "quit":
             break
         if log.is_valid:
+            cur.execute('SELECT name FROM log_in WHERE username = ?', (username,))
             print(f"Welcome {name}")
             customer()
             break
