@@ -24,7 +24,6 @@ if sign_in == "sign in":
     n = input("Name: ")
     p = input("Password: ")
     log = (n, p)
-    if log 
     print("signed in")
 
 elif sign_in == "admin":
@@ -33,10 +32,11 @@ elif sign_in == "admin":
     password = input("Password: ")
     account = Admin([name, password])
     if account.is_valid:
-        print("yay")
+        print(f"Welcome{name}")
+        break
     else:
         print("Invaild account")
-
+    
 elif sign_in == "sign up":
     name = input("Full name: ")
     while True:
