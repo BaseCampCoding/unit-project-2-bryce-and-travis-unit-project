@@ -6,13 +6,18 @@ con = sqlite3.connect('store-data-info.db')
 cur = con.cursor()
 
 cur.execute('CREATE TABLE IF NOT EXISTS Person (Name TEXT, Age INTEGER, Email TEXT, Phone_number INTEGER, Place TEXT, Job TEXT, Gender TEXT)')
-
+cur.execute("CREATE TABLE IF NOT EXISTS Log_in (Name TEXT, Password TEXT)")
 ADMIN = []
 with open("admin.json") as admin_file:
     READER = json.load(admin_file)
     for entry in READER:
         ADMIN.append([entry["name"], entry["password"]])
         
+class User:
+    def __init__(self, name, password):
+        self.name = name
+        self.password = password
+        self.is_valid = cur.execute("SELECT Name, Password FROM Log_in WHERE Name == ? , Password == ?",(name, password))
 
 
 
@@ -28,7 +33,7 @@ class Admin:
 
 print(ADMIN)
 
-cur.execute("CREATE TABLE IF NOT EXISTS Log_in (name TEXT, password TEXT)")
+
 
 
 

@@ -35,11 +35,12 @@ while True:
     
     if sign_in == "sign in":
         print("Sign in your account")
-        n = input("Name: ")
-        p = input("Password: ")
-        if n == "quit" or p == "quit":
+        name = input("Name: ")
+        password = input("Password: ")
+        log = User([name, password])
+        if name == "quit" or password == "quit":
             break
-        if log == Log_in:
+        elif log.is_valid:
             print(f"Welcome {name}")
             break
         else:
@@ -114,6 +115,7 @@ while True:
             password = input("Please enter a password for your account: ")
             if password == "quit":
                 break
+            cur.execute('INSERT INTO Log_in VALUES (?, ?)',(name, password))
             cur.execute('INSERT INTO Person VALUES (?, ?, ?, ?, ?, ?, ?)', (name, age, email, str(cell), place, job, gender))
             cur.execute('SELECT * FROM Person')
             for row in cur.fetchall():
