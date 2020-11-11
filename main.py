@@ -10,11 +10,7 @@ def application():
         print
 
 
-<<<<<<< HEAD
-=======
-def Employee():
     
->>>>>>> 0bfbc17fa2d40e9a99ba07cf603330465cce04ed
 
 def Employee():
     user_options = ["view jobs", "update profile"]
@@ -110,8 +106,6 @@ def admin():
             choices = input("Do you want to see a list of ALL users? [y/n] " ).lower()
             while choices not in yn:
                 print(f"{choices} is not a valid answer")
-<<<<<<< HEAD
-=======
                 choices = input("Do you want to see a list of ALL users? [y/n] ").lower()
                 if choices in yn:
                     break
@@ -134,7 +128,6 @@ def admin():
                     print(cur.fetchone())
 
                 
->>>>>>> 0bfbc17fa2d40e9a99ba07cf603330465cce04ed
         
         elif admin_input == "sign out":
             break
