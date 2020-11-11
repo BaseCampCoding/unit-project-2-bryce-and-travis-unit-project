@@ -36,10 +36,13 @@ print(ADMIN)
 
 cur.execute("CREATE TABLE IF NOT EXISTS Jobs(Name TEXT, Company_name TEXT, Salary TEXT, Job_Type TEXT, Schedule TEXT,  Experience TEXT, Location TEXT)")
 
-# cur.execute('''INSERT INTO Jobs VALUES ("Robotics Automation Engineer", "Noble Plastics Inc.", "$60,000 - $75,000 a year", None, "Robotics: 2 years (Preferred)", "Mississippi"),
-#         ("Plant Electrician", "Express Grain Terminals, LLC", "$23 - $30 an hour", "Full-time", "8 hour shift", "Industrial electrician experience: 5 years (Preferred)", "Greenwood, MS 38930"),
-#         ("Full Stack Developer", "Power Fusion Media", "$75,000 - $85,000 a year", "Full time", "10 - 12 hour shift", "Two years of experience as a Developer or related", "Memphis, TN")
-#         ''')
+
+cur.execute('''INSERT INTO Jobs VALUES 
+        ("Robotics Automation Engineer", "Noble Plastics Inc.", "$60,000 - $75,000 a year", "Full-time", "None", "Robotics: 2 years (Preferred)", "Mississippi"),
+        ("Plant Electrician", "Express Grain Terminals, LLC", "$23 - $30 an hour", "Full-time", "8 hour shift", "Industrial electrician experience: 5 years (Preferred)", "Greenwood, MS 38930"),
+        ("Full Stack Developer", "Power Fusion Media", "$75,000 - $85,000 a year", "Full time", "10 - 12 hour shift", "Two years of experience as a Developer or related", "Memphis, TN")
+        ''')
+
 
 
 cur.execute("CREATE TABLE IF NOT EXISTS States (st_name TEXT, abbreviation TEXT)")
