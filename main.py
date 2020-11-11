@@ -6,6 +6,7 @@ import PySimpleGUI as gui
 
 
 def User():
+    
     with open('jobs.json') as json_file:
         JOB_LIST = json.load(json_file)
 
@@ -35,8 +36,48 @@ def User():
         print("updated")
 
 
-# def admin():
-#     User()
+def admin():
+    while True:
+        with open('jobs.json') as json_file:
+            JOB_LIST = json.load(json_file)
+        admin_options = ["view jobs", "view users", "add jobs", "delete jobs", "sign out"]
+        admin_input = input("""
+        Do you want to
+            - View Jobs
+            - View Users
+            - Add Jobs
+            - Delete Jobs
+        """).lower()
+        
+        while admin_input not in admin_options:
+            print("No such command")
+            admin_input = input("""
+        Do you want to
+            - View Jobs
+            - View Users
+            - Add Jobs
+            - Delete Jobs
+        """).lower()
+            if admin_input in admin_options:
+                break
+        
+        if admin_input == "view jobs":
+            
+            cur.execute('SELECT name FROM Jobs')
+            jobs = cur.fetchall()
+            for j in jobs:
+                print(j[0])
+        
+        elif admin_input == "view users":
+            yn = ["y", "yes", "n", "no", "quit"]
+            choices = input("Do you want to see a list of ALL users?")
+            while choices not in yn:
+                print(f"{choices} is not a valid answer")
+        
+        elif admin_input == "sign out":
+            break
+        
+    
 
     
 
@@ -53,6 +94,7 @@ while True:
         Do you want to
             - Sign in
             - Sign up
+            - Quit
         """).lower()
     while sign_in not in sign_in_options:
         print("Invalid choice")
@@ -60,6 +102,7 @@ while True:
         Do you want to
             - Sign in
             - Sign up
+            - Quit
         """).lower()
         if sign_in in sign_in_options:
             break
@@ -94,6 +137,7 @@ while True:
                 break
             if account.is_valid:
                 print(f"Welcome {name}")
+                admin()
                 break
             else:
                 print("Invalid account.")
@@ -178,11 +222,46 @@ while True:
             break
     elif sign_in == "quit":
         break
-cur.execute('SELECT * FROM Person')
-for row in cur.fetchall():
-    print(row)       
+       
 print(2+2)
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# def job_application():
+#     do you want to apply? [y/n]
+
+#     if yes:
+#         do you need to change any of your personal information before it is sent?
+#         if yes:
+#            change =  what do you want to change?
+#             phone number
+#             new_change enter your number.
+
+#             UPDATE person SET change = ?), (new_change,))
