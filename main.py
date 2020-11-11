@@ -1,6 +1,7 @@
 import json
 from storing import *
 import pprint
+import PySimpleGUI as gui
 
 
 
@@ -28,6 +29,8 @@ def customer():
     if choice == "view jobs":
         for entry in JOB_LIST:
             print(entry)
+
+    elif choice == "update profile":
 
 
 # def admin():
@@ -74,6 +77,7 @@ while True:
         if password == "quit":
             break
         if log.is_valid:
+            cur.execute('SELECT name FROM log_in WHERE username = ?', (username,))
             print(f"Welcome {name}")
             customer()
             break
@@ -155,6 +159,11 @@ while True:
                 gender = "other"
 
             username = input("\nPlease enter in a username: ")
+            cur.execute('SELECT username FROM log_in WHERE username = ?', (username,))
+            cur.fetchall()
+            if username != []:
+                print("That username is already being used!")
+            
             password = input("Please enter a password for your account: ")
             if password == "quit":
                 break

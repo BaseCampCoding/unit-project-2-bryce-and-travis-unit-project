@@ -14,8 +14,8 @@ with open("admin.json") as admin_file:
         ADMIN.append([entry["name"], entry["password"]])
 
 class User:
-    def __init__ (self, name, password):
-        self.name = name
+    def __init__ (self, username, password):
+        self.username = username
         self.password = password
         cur.execute('SELECT Username, Password FROM Log_in WHERE Username = ? AND Password = ?', (username, password))
         user_check = cur.fetchall()
