@@ -3,13 +3,15 @@ from storing import *
 import pprint
 import PySimpleGUI as gui
 
+def application():
+    print("Welcome to your Application\n")
+    c = input("Is there anything that you want to change in your profile?[Y/N] ").lower
+    if c == "y":
+        print
+
 
 
 def Employee():
-    
-    with open('jobs.json') as json_file:
-        JOB_LIST = json.load(json_file)
-
     user_options = ["view jobs", "update profile"]
     choice = input("""
     Do you want to
@@ -26,29 +28,45 @@ def Employee():
         if choice in user_options:
             
             break
+    
+        if choice == "view jobs":
+            cur.execute('SELECT * FROM Jobs')
+            pprint(cur.fetchall())
+            p = input("What job do you want to pick?")
+            questions = ["Company_Name", "Description", "Salary", "Job_Type", "Schedule", "Experience", "Location"]
+            while True:
+                user_question = input("""
+                What do you want to know about this job?
+                -Company_Name
+                -Description
+                -Salary
+                -Job_Type
+                -Schedule
+                -Experiece
+                -Location
+                If you are done looking type "quit"
+                """)
+                if user_question in questions:
+                    cur.execute('SELECT ? FROM jobs WHERE job_name = ?', (user_question, p))
+                    job_des = cur.fetchall()
+                    print(job_des[0])
+                elif user_question == "quit":
+                    break
+                else:
+                    print(f"Sorry {user_question} doesn't exists")
+                x = input("\nDo you want to write your application for this Job [Y/N] ").upper
+                if x == "Y":
+                    application()
+                    break
+                else:
+                    break
+                    
+            
+            
 
-    if choice == "view jobs":
-        cur.execute('SELECT * FROM Jobs')
-        pprint(cur.fetchall())
-        p = input("\nPick a Job and we will pull up a quick summary about that\njob. Then you will write a short application to apply for that job.")
-        if p == "Robotics Automation Engineer":
-            print("\nRobotics Automation Engineer")
-            print("""\nNoble Plastics is an established Design, Automation, and Manufacturing company. We are currently 
-                    expanding our robotic automation team.Noble is searching for motivated, qualified candidates to 
-                    lead and help shape this segment of our business.\n
-                    Automation engineers develop robust system designs and programs for external and internal 
-                    customers. Noble continually invests in new technology and training to ensure our team has access to 
-                    the best tools.""")
-            x = input("\nDo you want to write your application for this Job [Y/N] ").upper
-            if x == "Y":
-                print("Y")
-                
-        
-        
 
-
-    elif choice == "update profile":
-        print("updated")
+        elif choice == "update profile":
+            print("updated")
 
 
 def admin():
@@ -88,15 +106,6 @@ def admin():
             choices = input("Do you want to see a list of ALL users?").lower()
             while choices not in yn:
                 print(f"{choices} is not a valid answer")
-                choices = input("Do you want to see a list of ALL users?").lower()
-                if choices in yn:
-                    break
-            if choices == "y" or choices == "yes":
-                cur.execute('SELECT name FROM PERSON')
-                all_users = cur.fetchall()
-                for user in all_users:
-                    print(user[0])
-                
         
         elif admin_input == "sign out":
             break
@@ -142,7 +151,7 @@ while True:
             break
         if log.is_valid:
             cur.execute('SELECT name FROM log_in WHERE username = ?', (username,))
-            print(f"Welcome {name}")
+            print(f"Welcome {name[0]}")
             Employee()
             break
         else:
@@ -254,3 +263,38 @@ print(2+2)
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# def job_application():
+#     do you want to apply? [y/n]
+
+#     if yes:
+#         do you need to change any of your personal information before it is sent?
+#         if yes:
+#            change =  what do you want to change?
+#             phone number
+#             new_change enter your number.
+
+#             UPDATE person SET change = ?), (new_change,))
