@@ -152,7 +152,8 @@ while True:
             break
         if log.is_valid:
             cur.execute('SELECT name FROM log_in WHERE username = ?', (username,))
-            print(f"Welcome {name}")
+            fetch_name = cur.fetchone()
+            print(f"Welcome {fetch_name[0]}")
             Employee()
             break
         else:
