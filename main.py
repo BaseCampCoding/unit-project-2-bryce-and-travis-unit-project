@@ -26,9 +26,23 @@ def User():
             
             break
     
-    if choice == "view jobs":
-        cur.execute('SELECT * FROM Jobs')
-        pprint(cur.fetchall())
+        if choice == "view jobs":
+            cur.execute('SELECT * FROM Jobs')
+            pprint(cur.fetchall())
+            p = input("\nPick a Job and we will pull up a quick summary about that\njob. Then you will write a short application to apply for that job.")
+            if p == "Robotics Automation Engineer":
+                print("\nRobotics Automation Engineer")
+                print("""\nNoble Plastics is an established Design, Automation, and Manufacturing company. We are currently 
+                        expanding our robotic automation team.Noble is searching for motivated, qualified candidates to 
+                        lead and help shape this segment of our business.\n
+                        Automation engineers develop robust system designs and programs for external and internal 
+                        customers. Noble continually invests in new technology and training to ensure our team has access to 
+                        the best tools.""")
+                x = input("\nDo you want to write your application for this Job [Y/N] ").upper
+                if x == "Y":
+                    
+            
+            
 
 
     elif choice == "update profile":
