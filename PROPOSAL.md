@@ -14,8 +14,8 @@ Job Searchers will be able to search available, apply for jobs, and update their
 ## Daily Goals
 - Tuesday's goal is to build the sign-in/sign-up application and add admin access. 
 - Wednesday's goal 
-    - Bryce will set up the job listing file and add allow users access to the job listings
-    - Travis will  add in the application process.
+    - Bryce will set up the users can view and 
+    - Travis will work on the admin 
 - Thursday's goal 
     - Travis will allow users to "favorite" job titles so they can easily check any job information they're interested in.
     - Bryce will add in the abiltiy to update personal inforamation and the ability for admins to add/delete jobs.

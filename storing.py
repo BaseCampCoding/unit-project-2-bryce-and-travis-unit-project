@@ -36,7 +36,7 @@ print(ADMIN)
 
 
 
-cur.execute("CREATE TABLE IF NOT EXISTS States (name TEXT, abbreviation TEXT)")
+cur.execute("CREATE TABLE IF NOT EXISTS States (st_name TEXT, abbreviation TEXT)")
 states = [("Alabama", "AL"),
 ("Alaska", "AK"),
 ("Arizona", "AZ"),
@@ -88,7 +88,13 @@ states = [("Alabama", "AL"),
 ("Wisconsin", "WI"),
 ("Wyoming", "WY")]
 
-all_states = []
+
+
+
+
 for state in states:
-    for word in state:
-        all_states.append(word.lower())
+    cur.execute('INSERT INTO states VALUES (?, ?)', (state[0].lower(), state[1].lower()))
+    print(state[0])
+    print(state[1])
+
+

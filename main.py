@@ -31,6 +31,7 @@ def customer():
             print(entry)
 
     elif choice == "update profile":
+        print("updated")
 
 
 # def admin():
@@ -43,12 +44,7 @@ def customer():
 print(f"Welcome to Ndeed")
 
 sign_in_options = ["sign in", "sign up", "sign out", "admin"]
-# sign_in = input("""
-#     Do you want to
-#         - Sign in
-#         - Sign up
-#     """).lower()
-# print("Not a valid option")
+
 
 
 while True:
@@ -144,11 +140,17 @@ while True:
             place = input("What state do you live in: ").lower()
             if place == "quit":
                 break
-            while place not in all_states:
+            cur.execute('SELECT st_name FROM States WHERE st_name = ? or abbreviation = ?', (place))
+            state_check = cur.fetchall()
+            while state_check == []:
                 print("Please check spelling.")
-                place = input("What state do you live in: ")
-                if place in all_states:
+                place = input("What state do you live in: ").lower()
+                if state_check != []:
                     break
+            if len(list(place)) == 2:
+                cur.execute('SELECT name FROM States WHERE abbreviation = ?', (place))
+                fetch_state = cur.fetchall()
+                state_name = fetch_state[0]
         
 
             job = None
@@ -168,7 +170,7 @@ while True:
             if password == "quit":
                 break
             cur.execute('INSERT INTO log_in VALUES (?, ?, ?)', (name, username, password))
-            cur.execute('INSERT INTO Person VALUES (?, ?, ?, ?, ?, ?, ?)', (name, age, email, str(cell), place, job, gender))
+            cur.execute('INSERT INTO Person VALUES (?, ?, ?, ?, ?, ?, ?)', (name, age, email, str(cell), state_name, job, gender))
             cur.execute('SELECT * FROM Person')
             con.commit()
             break
