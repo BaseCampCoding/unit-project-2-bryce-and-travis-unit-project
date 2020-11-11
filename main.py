@@ -43,7 +43,7 @@ def customer():
 
 print(f"Welcome to Ndeed")
 
-sign_in_options = ["sign in", "sign up", "sign out", "admin"]
+sign_in_options = ["sign in", "sign up", "sign out", "admin", "quit"]
 
 
 
@@ -137,27 +137,29 @@ while True:
             if cell == "quit":
                     break
 
-            place = input("What state do you live in: ").lower()
+            place = input("What state do you live in: ").upper()
             if place == "quit":
                 break
-            cur.execute('SELECT st_name FROM States WHERE st_name = ? or abbreviation = ?', (place))
+            cur.execute('SELECT st_name FROM States WHERE st_name = ? or abbreviation = ?', (place, place))
             state_check = cur.fetchall()
             while state_check == []:
                 print("Please check spelling.")
-                place = input("What state do you live in: ").lower()
+                place = input("What state do you live in: ").upper()
+                cur.execute('SELECT st_name FROM States WHERE st_name = ? or abbreviation = ?', (place, place))
+                state_check = cur.fetchall()
                 if state_check != []:
                     break
             if len(list(place)) == 2:
-                cur.execute('SELECT name FROM States WHERE abbreviation = ?', (place))
+                cur.execute('SELECT st_name FROM States WHERE abbreviation = ?', (place,))
                 fetch_state = cur.fetchall()
-                state_name = fetch_state[0]
+                state_name = fetch_state[0][0]
         
 
             job = None
             gender = input("Gender: ")
             if gender == "quit":
                 break
-            if gender != "male" or gender != "female":
+            if gender != "male" and gender != "female":
                 gender = "other"
 
             username = input("\nPlease enter in a username: ")
@@ -170,11 +172,14 @@ while True:
             if password == "quit":
                 break
             cur.execute('INSERT INTO log_in VALUES (?, ?, ?)', (name, username, password))
-            cur.execute('INSERT INTO Person VALUES (?, ?, ?, ?, ?, ?, ?)', (name, age, email, str(cell), state_name, job, gender))
-            cur.execute('SELECT * FROM Person')
+            cur.execute('INSERT INTO Person VALUES (?, ?, ?, ?, ?, ?, ?)', (name, age, email, str(cell), str(state_name), job, gender))
             con.commit()
             break
-        
+    elif sign_in == "quit":
+        break
+cur.execute('SELECT * FROM Person')
+for row in cur.fetchall():
+    print(row)       
 print(2+2)
 
 

@@ -8,6 +8,7 @@ cur = con.cursor()
 cur.execute('CREATE TABLE IF NOT EXISTS Person (Name TEXT, Age INTEGER, Email TEXT, Phone_number INTEGER, Place TEXT, Job TEXT, Gender TEXT)')
 cur.execute("CREATE TABLE IF NOT EXISTS Log_in (Name TEXT, Username TEXT, Password TEXT)")
 
+
 ADMIN = []
 with open("admin.json") as admin_file:
     READER = json.load(admin_file)
@@ -33,13 +34,12 @@ class Admin:
 
 print(ADMIN)
 
-cur.execute("CREATE TABLE IF NOT EXISTS Jobs(Name TEXT, Company_name TEXT, Pay/Salary TEXT, Job_Type TEXT, Schedule TEXT,  Skill/Experience TEXT, Location TEXT)")
+cur.execute("CREATE TABLE IF NOT EXISTS Jobs(Name TEXT, Company_name TEXT, Salary TEXT, Job_Type TEXT, Schedule TEXT, Experience TEXT, Location TEXT)")
 
-cur.execute('''INSERT INTO Jobs VALUES 
-        ("Robotics Automation Engineer", "Noble Plastics Inc.", "$60,000 - $75,000 a year", None, "Robotics: 2 years (Preferred)", "Mississippi"),
-        ("Plant Electrician", "Express Grain Terminals, LLC", "$23 - $30 an hour", "Full-time", "8 hour shift", "Industrial electrician experience: 5 years (Preferred)", "Greenwood, MS 38930"),
-        ("Full Stack Developer", "Power Fusion Media", "$75,000 - $85,000 a year", "Full time", "10 - 12 hour shift", "Two years of experience as a Developer or related", "Memphis, TN")
-        ''')
+# cur.execute('''INSERT INTO Jobs VALUES ("Robotics Automation Engineer", "Noble Plastics Inc.", "$60,000 - $75,000 a year", None, "Robotics: 2 years (Preferred)", "Mississippi"),
+#         ("Plant Electrician", "Express Grain Terminals, LLC", "$23 - $30 an hour", "Full-time", "8 hour shift", "Industrial electrician experience: 5 years (Preferred)", "Greenwood, MS 38930"),
+#         ("Full Stack Developer", "Power Fusion Media", "$75,000 - $85,000 a year", "Full time", "10 - 12 hour shift", "Two years of experience as a Developer or related", "Memphis, TN")
+#         ''')
 
 
 cur.execute("CREATE TABLE IF NOT EXISTS States (st_name TEXT, abbreviation TEXT)")
@@ -99,8 +99,7 @@ states = [("Alabama", "AL"),
 
 
 for state in states:
-    cur.execute('INSERT INTO states VALUES (?, ?)', (state[0].lower(), state[1].lower()))
-    print(state[0])
-    print(state[1])
+    cur.execute('INSERT INTO states VALUES (?, ?)', (state[0].upper(), state[1].upper()))
+
 
 
