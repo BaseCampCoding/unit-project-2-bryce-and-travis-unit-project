@@ -5,7 +5,7 @@ import PySimpleGUI as gui
 
 
 
-def customer():
+def User():
     with open('jobs.json') as json_file:
         JOB_LIST = json.load(json_file)
 
@@ -27,15 +27,16 @@ def customer():
             break
     
     if choice == "view jobs":
-        for entry in JOB_LIST:
-            print(entry)
+        cur.execute('SELECT * FROM Jobs')
+        pprint(cur.fetchall())
+
 
     elif choice == "update profile":
         print("updated")
 
 
 # def admin():
-#     customer()
+#     User()
 
     
 
@@ -75,7 +76,7 @@ while True:
         if log.is_valid:
             cur.execute('SELECT name FROM log_in WHERE username = ?', (username,))
             print(f"Welcome {name}")
-            customer()
+            User()
             break
         else:
             print("This account doesn't exist.")
