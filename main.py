@@ -5,7 +5,7 @@ import PySimpleGUI as gui
 
 
 
-def User():
+def Employee():
     
     with open('jobs.json') as json_file:
         JOB_LIST = json.load(json_file)
@@ -26,24 +26,25 @@ def User():
         if choice in user_options:
             
             break
-    
-        if choice == "view jobs":
-            cur.execute('SELECT * FROM Jobs')
-            pprint(cur.fetchall())
-            p = input("\nPick a Job and we will pull up a quick summary about that\njob. Then you will write a short application to apply for that job.")
-            if p == "Robotics Automation Engineer":
-                print("\nRobotics Automation Engineer")
-                print("""\nNoble Plastics is an established Design, Automation, and Manufacturing company. We are currently 
-                        expanding our robotic automation team.Noble is searching for motivated, qualified candidates to 
-                        lead and help shape this segment of our business.\n
-                        Automation engineers develop robust system designs and programs for external and internal 
-                        customers. Noble continually invests in new technology and training to ensure our team has access to 
-                        the best tools.""")
-                x = input("\nDo you want to write your application for this Job [Y/N] ").upper
-                if x == "Y":
-                    
-            
-            
+
+    if choice == "view jobs":
+        cur.execute('SELECT * FROM Jobs')
+        pprint(cur.fetchall())
+        p = input("\nPick a Job and we will pull up a quick summary about that\njob. Then you will write a short application to apply for that job.")
+        if p == "Robotics Automation Engineer":
+            print("\nRobotics Automation Engineer")
+            print("""\nNoble Plastics is an established Design, Automation, and Manufacturing company. We are currently 
+                    expanding our robotic automation team.Noble is searching for motivated, qualified candidates to 
+                    lead and help shape this segment of our business.\n
+                    Automation engineers develop robust system designs and programs for external and internal 
+                    customers. Noble continually invests in new technology and training to ensure our team has access to 
+                    the best tools.""")
+            x = input("\nDo you want to write your application for this Job [Y/N] ").upper
+            if x == "Y":
+                print("Y")
+                
+        
+        
 
 
     elif choice == "update profile":
@@ -84,9 +85,18 @@ def admin():
         
         elif admin_input == "view users":
             yn = ["y", "yes", "n", "no", "quit"]
-            choices = input("Do you want to see a list of ALL users?")
+            choices = input("Do you want to see a list of ALL users?").lower()
             while choices not in yn:
                 print(f"{choices} is not a valid answer")
+                choices = input("Do you want to see a list of ALL users?").lower()
+                if choices in yn:
+                    break
+            if choices == "y" or choices == "yes":
+                cur.execute('SELECT name FROM PERSON')
+                all_users = cur.fetchall()
+                for user in all_users:
+                    print(user[0])
+                
         
         elif admin_input == "sign out":
             break
@@ -133,7 +143,7 @@ while True:
         if log.is_valid:
             cur.execute('SELECT name FROM log_in WHERE username = ?', (username,))
             print(f"Welcome {name}")
-            User()
+            Employee()
             break
         else:
             print("This account doesn't exist.")
@@ -244,38 +254,3 @@ print(2+2)
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# def job_application():
-#     do you want to apply? [y/n]
-
-#     if yes:
-#         do you need to change any of your personal information before it is sent?
-#         if yes:
-#            change =  what do you want to change?
-#             phone number
-#             new_change enter your number.
-
-#             UPDATE person SET change = ?), (new_change,))
