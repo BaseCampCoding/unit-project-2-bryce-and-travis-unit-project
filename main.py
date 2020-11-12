@@ -118,6 +118,7 @@ def admin():
         - View Users
         - Add Jobs
         - Delete Jobs
+        - New Admin
     """).lower()
         
         while admin_input not in admin_options:
@@ -171,12 +172,21 @@ def admin():
         elif admin_input == "add jobs":
             schedule = ["full-time", "part-time"]
             j_name = input("What is the name of the position? ")
+            if j_name == "quit":
+                break
             com_name = input("What is the company's name? ")
+            if com_name == "quit":
+                break
             j_description = input("What is the job description? ")
+            if j_description == "quit":
+                break
             salary = input("What is the salary for this job? ") 
-            
+            if salary == "quit":
+                break
 
             job_type = input("Is this job full-time or part-time? ")
+            if job_type == "quit":
+                break
             while job_type not in schedule:
                 print("part-time or full-time only")
                 job_type = input("Is this job full-time or part-time? ")
@@ -184,9 +194,15 @@ def admin():
                     break
 
             hours = input("What is the schedule for this job? ")
+            if hours == "quit":
+                break
             req = input("What are the requirements for this job? ")
+            if req == "quit":
+                break
 
             located = input("What state is this job located? ").upper()
+            if located == "QUIT":
+                break
             cur.execute('SELECT st_name FROM States WHERE st_name = ? or abbreviation = ?', (located, located))
             state_check = cur.fetchall()
             while state_check == []:
@@ -204,17 +220,22 @@ def admin():
         elif admin_input == "delete jobs":
             
             del_job = input("What is the position name? ")
+            if del_job == "quit":
+                break
             cur.execute('SELECT job_name FROM jobs WHERE job_name = ?', (del_job,))
             job_list = cur.fetchall()
+            
             while job_list == []:
                 print("We don't have that job listed.")
                 del_job = input("What is the position name? ")
                 cur.execute('SELECT job_name FROM jobs WHERE job_name = ?', (del_job,))
-                job_list = cur.fetchone()
+                job_list = cur.fetchall()
                 if job_list != []:
                     break
                
             del_job2 = input("What is the company's name? ")
+            if del_job2 == "quit":
+                break
 
             cur.execute('SELECT company_name FROM jobs WHERE company_name = ?', (del_job2,))
             job_list = cur.fetchone()
@@ -227,8 +248,20 @@ def admin():
                     break
             cur.execute('DELETE FROM jobs WHERE job_name = ? AND company_name = ?', (del_job, del_job2) )
             con.commit()
-
-                
+        
+        if admin_input == "new admin":
+            pick_user = input("Enter the username for the user you want to give admin: ")
+            cur.execute('SELECT username FROM log_in WHERE username = ?', (pick_user,))
+            isuser = cur.fetchall()
+            while isuser == []:
+                print("That user doesn't exist.")
+                pick_user = input("Enter the username for the user you want to give admin: ")
+                cur.execute('SELECT username FROM log_in WHERE username = ?', (pick_user,))
+                isuser = cur.fetchall()
+                if isuser != []:
+                    break
+            cur.execute('UPDATE log_in SET admin = TRUE WHERE username = ?', (pick_user,))
+            con.commit()
         
         elif admin_input == "sign out":
             break
