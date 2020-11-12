@@ -43,16 +43,16 @@ def look_for_job():
 def Employee():
     user_options = ["view jobs", "update profile", "application"]
     choice = input("""
-    Do you want to
-        -View Jobs
-        -Update Profile
+Do you want to
+    -View Jobs
+    -Update Profile
     """).lower()
     while choice not in user_options:
         print(f"{choice} is not a valid option.")
         choice = input("""
-    Do you want to
-        -View Jobs
-        -Update Profile
+Do you want to
+    -View Jobs
+    -Update Profile
     """).lower()
         if choice in user_options:
             
@@ -160,19 +160,19 @@ sign_in_options = ["sign in", "sign up", "sign out", "admin", "quit"]
 
 while True:
     sign_in = input("""
-        Do you want to
-            - Sign in
-            - Sign up
-            - Quit
-        """).lower()
+Do you want to
+    - Sign in
+     - Sign up
+    - Quit
+    """).lower()
     while sign_in not in sign_in_options:
         print("Invalid choice")
         sign_in = input("""
-        Do you want to
-            - Sign in
-            - Sign up
-            - Quit
-        """).lower()
+Do you want to
+    - Sign in
+    - Sign up
+    - Quit
+    """).lower()
         if sign_in in sign_in_options:
             break
     
@@ -188,9 +188,7 @@ while True:
         if log.is_valid:
             cur.execute('SELECT Name FROM log_in WHERE Username = ?', (username,))
             name = cur.fetchone()
-            #while row in one:
-            #    print(row)
-            print(f"Welcome {name[0]}")
+            print(f"Welcome {name[0]}").upper
             Employee()
             break
         else:
