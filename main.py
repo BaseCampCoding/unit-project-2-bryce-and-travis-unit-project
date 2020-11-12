@@ -1,6 +1,6 @@
 import json
 from storing import *
-import pprint
+from pprint import pprint
 import PySimpleGUI as gui
 
 def application():
@@ -30,44 +30,41 @@ def Employee():
             
             break
     
-        if choice == "view jobs":
-            cur.execute('SELECT * FROM Jobs')
-            pprint(cur.fetchall())
-            p = input("What job do you want to pick?")
-            questions = ["Company_Name", "Description", "Salary", "Job_Type", "Schedule", "Experience", "Location"]
-            while True:
-                user_question = input("""
-                What do you want to know about this job?
-                -Company_Name
-                -Description
-                -Salary
-                -Job_Type
-                -Schedule
-                -Experiece
-                -Location
-                If you are done looking type "quit"
-                """)
-                if user_question in questions:
-                    cur.execute('SELECT ? FROM jobs WHERE job_name = ?', (user_question, p))
-                    job_des = cur.fetchall()
-                    print(job_des[0])
-                elif user_question == "quit":
-                    break
-                else:
-                    print(f"Sorry {user_question} doesn't exists")
-                x = input("\nDo you want to write your application for this Job [Y/N] ").upper
-                if x == "Y":
-                    application()
-                    break
-                else:
-                    break
-                    
-            
-            
+    if choice == "view jobs":
+        cur.execute('SELECT DISTINCT Job_name FROM Jobs') # Distinct only selects a value once
+        pprint(cur.fetchall())
+        p = input("What job do you want to pick? ")
+        questions = ["company_name", "description", "salary", "job_type", "schedule", "experience", "location"]
+        while True:
+            user_question = input("""
+What do you want to know about this job?
+-Company_Name
+-Description
+-Salary
+-Job_Type
+-Schedule
+-Experiece
+-Location
+If you are done looking type "quit"
+""").lower()
+            if user_question in questions:
+                cur.execute('SELECT DISTINCT ? FROM Jobs WHERE job_name = ?', (user_question, p))
+                job_des = cur.fetchall()
+                print(job_des)
+            elif user_question == "quit":
+                break
+            else:
+                print(f"Sorry {user_question} doesn't exists")
+        x = input("\nDo you want to write your application for this Job [Y/N] ").upper
+        if x == "Y":
+            application()
+                
+        
+        
 
 
-        elif choice == "update profile":
-            print("updated")
+    elif choice == "update profile":
+        print("updated")
 
 
 def admin():
@@ -172,7 +169,10 @@ while True:
         if password == "quit":
             break
         if log.is_valid:
-            cur.execute('SELECT name FROM log_in WHERE username = ?', (username,))
+            cur.execute('SELECT Name FROM log_in WHERE Username = ?', (username,))
+            name = cur.fetchone()
+            #while row in one:
+            #    print(row)
             print(f"Welcome {name[0]}")
             Employee()
             break

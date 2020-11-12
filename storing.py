@@ -34,7 +34,7 @@ class Admin:
 
 print(ADMIN)
 
-cur.execute("CREATE TABLE IF NOT EXISTS Jobs(Job_name TEXT, Company_name TEXT, Description TEXT, Salary TEXT, Job_Type TEXT, Schedule TEXT,  Experience TEXT, Location TEXT)")
+cur.execute("CREATE TABLE IF NOT EXISTS Jobs(job_name TEXT, company_name TEXT, description TEXT, salary TEXT, job_type TEXT, schedule TEXT,  experience TEXT, location TEXT)")
 
 
 cur.execute('''INSERT INTO Jobs VALUES 
@@ -106,3 +106,7 @@ for state in states:
 
 
 
+if __name__ == "__main__":
+    from pprint import pprint
+    cur.execute('SELECT * FROM Jobs')
+    pprint(cur.fetchall())
