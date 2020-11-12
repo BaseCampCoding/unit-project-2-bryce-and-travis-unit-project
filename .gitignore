@@ -12,3 +12,4 @@ store-data-info.db
 .vscode/settings.json
 __pycache__/storing.cpython-37.pyc
 __pycache__/storing.cpython-38.pyc
+store-data-info.db-journal
