@@ -172,7 +172,7 @@ def admin():
                 pass
 
             while True:    
-                one_user = input("What user so you want information for? ")
+                one_user = input("What user do you want information for? ")
                 cur.execute('SELECT name FROM person WHERE name = ?', (one_user,))
                 isuser = cur.fetchall()
                 if isuser == []:
@@ -180,6 +180,9 @@ def admin():
                 elif isuser != []:
                     cur.execute('SELECT * FROM person WHERE name = ?', (one_user,))
                     print(cur.fetchone())
+        elif admin_input == "add jobs":
+            j_name = input("What is the name of the position? ")
+            
 
                 
         
