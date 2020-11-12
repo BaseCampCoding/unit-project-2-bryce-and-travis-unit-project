@@ -134,14 +134,18 @@ def admin():
 
             while True:    
                 one_user = input("What user so you want information for? ")
+                if one_user == "none":
+                    break
                 cur.execute('SELECT name FROM person WHERE name = ?', (one_user,))
                 isuser = cur.fetchall()
+                
                 if isuser == []:
                     print(f"We don't have a user by the name of {one_user}.")
                 elif isuser != []:
                     cur.execute('SELECT * FROM person WHERE name = ?', (one_user,))
                     print(cur.fetchone())
         elif admin_input == "add jobs":
+            schedule
             j_name = input("What is the name of the position? ")
             com_name = input("What is the company's name? ")
             j_description = input("What is the job description? ")
@@ -289,6 +293,11 @@ Do you want to
                 cur.execute('SELECT st_name FROM States WHERE abbreviation = ?', (place,))
                 fetch_state = cur.fetchall()
                 state_name = fetch_state[0][0]
+            else: 
+                cur.execute('SELECT st_name FROM States WHERE st_name = ?', (place,))
+                fetch_state = cur.fetchall()
+                state_name = fetch_state[0][0]
+
         
 
             job = None
