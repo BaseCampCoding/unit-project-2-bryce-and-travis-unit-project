@@ -11,6 +11,7 @@ cur.execute("CREATE TABLE IF NOT EXISTS Log_in (Name TEXT, Username TEXT, Passwo
 cur.execute(''' INSERT INTO Log_in VALUES ("Travis Alexander", "TravisA", "blah", True), ("Bryce Taylor", "BLT21", "1234", True)''')
 
 
+
 class User:
     def __init__ (self, username, password):
         self.username = username
