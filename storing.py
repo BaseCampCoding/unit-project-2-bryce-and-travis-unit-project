@@ -5,7 +5,7 @@ con = sqlite3.connect('store-data-info.db')
 
 cur = con.cursor()
 
-cur.execute('CREATE TABLE IF NOT EXISTS Person (Name TEXT, Age INTEGER, Email TEXT, Phone_number INTEGER, Place TEXT, Job TEXT, Gender TEXT)')
+cur.execute('CREATE TABLE IF NOT EXISTS Person (name TEXT, age INTEGER, email TEXT, phone_number INTEGER, place TEXT, job TEXT, gender TEXT)')
 cur.execute("CREATE TABLE IF NOT EXISTS Log_in (Name TEXT, Username TEXT, Password TEXT)")
 
 
@@ -108,5 +108,5 @@ for state in states:
 
 if __name__ == "__main__":
     from pprint import pprint
-    cur.execute('SELECT * FROM Jobs')
+    cur.execute('SELECT * FROM Person')
     pprint(cur.fetchall())
