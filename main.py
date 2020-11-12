@@ -293,7 +293,8 @@ Do you want to
             password = input("Please enter a password for your account: ")
             if password == "quit":
                 break
-            cur.execute('INSERT INTO log_in VALUES (?, ?, ?)', (name, username, password))
+            admin = False
+            cur.execute('INSERT INTO log_in VALUES (?, ?, ?)', (name, username, password, admin))
             cur.execute('INSERT INTO Person VALUES (?, ?, ?, ?, ?, ?, ?)', (name, age, email, str(cell), str(state_name), job, gender))
             con.commit()
             break
