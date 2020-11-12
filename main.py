@@ -74,32 +74,37 @@ Do you want to
 """)
             change = input("What do you want to change?(If not type 'quit') ").lower()
             ["full name", "age", "email", "phone number", "place", "gender"]
-            while True:
-                if change == "full name":
+            if change == "full name":
+                new_change = input(f"What do you want to change in {change}? ")
+                cur.execute('SELECT person.name FROM Person JOIN Log_in WHERE log_in.username = ?', (username,))
+                name_check = cur.fetchone()
+                old_name = name_check[0]
+                cur.execute('UPDATE Person SET name = ? WHERE name = ?', (new_change, old_name))
+                con.commit()
+            elif change == "age":
+                new_change = input(f"What do you want to change in {change}? ")
+                if new_change.isdigit():
+                    new_change = int(new_change)
+                else:
+                    print("Please enter a numerical value.")
+                cur.execute('UPDATE Person SET age = ? WHERE name = ?', (new_change, name))
+                con.commit()
+            elif change == "email":
+                while True:
                     new_change = input(f"What do you want to change in {change}? ")
-                    cur.execute('SELECT person.name FROM Person JOIN Log_in WHERE log_in.username = ?', (username,))
-                    name_check = cur.fetchone()
-                    old_name = name_check[0]
-                    cur.execute('UPDATE Person SET name = ? WHERE name = ?', (new_change, old_name))
-                    con.commit()
-                elif change == "age":
-                    new_change = input(f"What do you want to change in {change}? ")
-                    if new_change.isdigit():
-                        new_change = int(new_change)
-                    else:
-                        print("Please enter a numerical value.")
-                    cur.execute('UPDATE Person SET age = ? WHERE name = ?', (new_change, name))
-                    con.commit()
-                elif change == "email":
-                    new_change = input(f"What do you want to change in {change}? ")
-                    cur.execute('SELECT email FROM Person WHERE email = ?', (email,))
+                    cur.execute('SELECT email FROM Person WHERE email = ?', (new_change,))
                     emails = cur.fetchall()
                     if emails != []:
-                        print("That email is already being used! You should sign in.")
-                elif change == 'job':
-                    look_for_job()
-                elif change  == "quit":
-                    break
+                        print("That email is already being used!")
+                    elif emails == []:
+                        cur.execute('UPDATE Person SET email = ? WHERE name = ?', (new_change, name))
+                        con.commit()
+                        break
+                
+            elif change == 'job':
+                look_for_job()
+            elif change  == "quit":
+                break
         
 
 
