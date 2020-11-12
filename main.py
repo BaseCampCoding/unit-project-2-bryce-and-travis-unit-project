@@ -43,62 +43,22 @@ def look_for_job():
 def Employee():
     user_options = ["view jobs", "update profile", "application"]
     choice = input("""
-    Do you want to
-        -View Jobs
-        -Update Profile
+Do you want to
+    -View Jobs
+    -Update Profile
     """).lower()
     while choice not in user_options:
         print(f"{choice} is not a valid option.")
         choice = input("""
-    Do you want to
-        -View Jobs
-        -Update Profile
+Do you want to
+    -View Jobs
+    -Update Profile
     """).lower()
         if choice in user_options:
+            
             break
     
     if choice == "view jobs":
-        cur.execute('SELECT job_name FROM Jobs')
-
-        for row in cur.fetchall():
-            print(row[0])
-
-        p = input("What job do you want to pick?")
-        questions = ["Company_Name", "Description", "Salary", "Job_Type", "Schedule", "Experience", "Location"]
-        while True:
-            user_question = input("""
-            What do you want to know about this job?
-            -Company_Name
-            -Description
-            -Salary
-            -Job_Type
-            -Schedule
-            -Experiece
-            -Location
-            If you are done looking type "quit"
-            """)
-
-            if user_question in questions:
-                cur.execute('SELECT ? FROM jobs WHERE job_name = ?', (user_question, p))
-                job_des = cur.fetchall()
-                print(job_des[0])
-            elif user_question == "quit":
-                break
-            else:
-                print(f"Sorry {user_question} doesn't exists")
-            x = input("\nDo you want to write your application for this Job [Y/N] ").upper
-            if x == "Y":
-                application()
-                break
-            else:
-                break
-                
-            
-            
-
-
-    elif choice == "update profile":
-        print("updated")
         look_for_job()
 
     elif choice == "update profile":
@@ -172,7 +132,7 @@ def admin():
                 pass
 
             while True:    
-                one_user = input("What user do you want information for? ")
+                one_user = input("What user so you want information for? ")
                 cur.execute('SELECT name FROM person WHERE name = ?', (one_user,))
                 isuser = cur.fetchall()
                 if isuser == []:
@@ -205,19 +165,19 @@ sign_in_options = ["sign in", "sign up", "sign out", "admin", "quit"]
 
 while True:
     sign_in = input("""
-        Do you want to
-            - Sign in
-            - Sign up
-            - Quit
-        """).lower()
+Do you want to
+    - Sign in
+    - Sign up
+    - Quit
+    """).lower()
     while sign_in not in sign_in_options:
         print("Invalid choice")
         sign_in = input("""
-        Do you want to
-            - Sign in
-            - Sign up
-            - Quit
-        """).lower()
+Do you want to
+    - Sign in
+    - Sign up
+    - Quit
+    """).lower()
         if sign_in in sign_in_options:
             break
     
@@ -233,9 +193,7 @@ while True:
         if log.is_valid:
             cur.execute('SELECT Name FROM log_in WHERE Username = ?', (username,))
             name = cur.fetchone()
-            #while row in one:
-            #    print(row)
-            print(f"Welcome {name[0]}")
+            print(f"Welcome {name[0]}").upper
             Employee()
             break
         else:
@@ -343,3 +301,44 @@ while True:
         break
        
 print(2+2)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# def job_application():
+#     do you want to apply? [y/n]
+
+#     if yes:
+#         do you need to change any of your personal information before it is sent?
+#         if yes:
+#            change =  what do you want to change?
+#             phone number
+#             new_change enter your number.
+
+#             UPDATE person SET change = ?), (new_change,))
