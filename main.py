@@ -196,7 +196,7 @@ def admin():
             cur.execute('INSERT INTO jobs VALUES (?, ?, ?, ?, ?, ?, ?, ?)', (j_name, com_name, j_description, salary, job_type, hours, req, located))
             con.commit()
         elif admin_input == "delete jobs":
-
+            
             del_job = input("What is the position name? ")
             cur.execute('SELECT job_name FROM jobs WHERE job_name = ?', (del_job,))
             job_list = cur.fetchall()
@@ -207,6 +207,7 @@ def admin():
                 job_list = cur.fetchone()
                 if job_list != []:
                     break
+               
             del_job2 = input("What is the company's name? ")
 
             cur.execute('SELECT company_name FROM jobs WHERE company_name = ?', (del_job2,))
