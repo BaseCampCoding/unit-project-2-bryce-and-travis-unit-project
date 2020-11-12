@@ -5,7 +5,7 @@ import PySimpleGUI as gui
 
 def application():
     print("Welcome to your Application\n")
-    c = input("Is there anything that you want to change in your profile?[Y/N] ").lower
+    c = input("Is there anything that you want to change in your profile?[Y/N] ").lower()
     if c == "y":
         print
 def look_for_job():
@@ -89,28 +89,28 @@ def admin():
 
         admin_options = ["view jobs", "view users", "add jobs", "delete jobs", "sign out"]
         admin_input = input("""
-        Do you want to
-            - View Jobs
-            - View Users
-            - Add Jobs
-            - Delete Jobs
-        """).lower()
+    Do you want to
+        - View Jobs
+        - View Users
+        - Add Jobs
+        - Delete Jobs
+    """).lower()
         
         while admin_input not in admin_options:
             print("No such command")
             admin_input = input("""
-        Do you want to
-            - View Jobs
-            - View Users
-            - Add Jobs
-            - Delete Jobs
-        """).lower()
+    Do you want to
+        - View Jobs
+        - View Users
+        - Add Jobs
+        - Delete Jobs
+    """).lower()
             if admin_input in admin_options:
                 break
         
         if admin_input == "view jobs":
             
-            cur.execute('SELECT job_name FROM Jobs')
+            cur.execute('SELECT DISTINCT job_name FROM Jobs')
             jobs = cur.fetchall()
             for j in jobs:
                 print(j[0])
@@ -207,11 +207,11 @@ Do you want to
             if name == "quit":
                 break
             password = input("Password: ")
-            account = Admin([name, password])
+            account = User(name, password)
             if password == "quit":
                 break
-            if account.is_valid:
-                print(f"Welcome {name}")
+            if account.is_admin:
+                print(f"Welcome admin {name}")
                 admin()
                 break
             else:

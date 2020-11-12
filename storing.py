@@ -6,8 +6,9 @@ con = sqlite3.connect('store-data-info.db')
 cur = con.cursor()
 
 cur.execute('CREATE TABLE IF NOT EXISTS Person (name TEXT, age INTEGER, email TEXT, phone_number INTEGER, place TEXT, job TEXT, gender TEXT)')
-cur.execute("CREATE TABLE IF NOT EXISTS Log_in (Name TEXT, Username TEXT, Password TEXT)")
+cur.execute("CREATE TABLE IF NOT EXISTS Log_in (Name TEXT, Username TEXT, Password TEXT, Admin NULL)")
 
+cur.execute(''' INSERT INTO Log_in VALUES ("Travis Alexander", "TravisA", "blah", True), ("Bryce Taylor", "BLT21", "1234", True)''')
 
 ADMIN = []
 with open("admin.json") as admin_file:
@@ -22,15 +23,18 @@ class User:
         cur.execute('SELECT Username, Password FROM Log_in WHERE Username = ? AND Password = ?', (username, password))
         user_check = cur.fetchall()
         self.is_valid = user_check != []
+        cur.execute('SELECT Username, Password FROM Log_in WHERE admin = TRUE AND username = ? AND Password = ?', (username, password))
+        admins = cur.fetchall()
+        self.is_admin = admins !=  []
 
 
-class Admin:
-    def __init__(self, log_in):
-        self.log_in = log_in
-        self.is_valid = log_in in ADMIN
+# class Admin:
+#     def __init__(self, log_in):
+#         self.log_in = log_in
+#         self.is_valid = log_in in ADMIN
 
-    def __str__(self):
-        return self.log_in
+#     def __str__(self):
+#         return self.log_in
 
 # print(ADMIN)
 
