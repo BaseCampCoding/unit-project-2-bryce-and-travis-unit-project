@@ -87,7 +87,7 @@ Do you want to
 def admin():
     while True:
 
-        admin_options = ["view jobs", "view users", "add jobs", "delete jobs", "sign out"]
+        admin_options = ["view jobs", "view users", "add jobs", "delete jobs", "sign out", "new admin"]
         admin_input = input("""
     Do you want to
         - View Jobs
@@ -104,6 +104,7 @@ def admin():
         - View Users
         - Add Jobs
         - Delete Jobs
+        - New Admin
     """).lower()
             if admin_input in admin_options:
                 break
@@ -144,7 +145,21 @@ def admin():
             j_name = input("What is the name of the position? ")
             com_name = input("What is the company's name? ")
             j_description = input("What is the job description? ")
+            salary = input("What is the salary for this job? ")
+            job_type = input("Is this job full-time or part-time? ")
+            hours = input("What is the schedule for this job? ")
+            req = input("What are the requirements for this job? ")
+            located = input("Where is this job located? ")
             
+
+            cur.execute('INSERT INTO jobs VALUES (?, ?, ?, ?, ?, ?, ?, ?)', (j_name, com_name, j_description, salary, job_type, hours, req, located))
+            con.commit()
+        elif admin_input == "delete jobs":
+            del_job = input("What is the position name? ")
+            del_job2 = input("What is the company's name? ")
+
+            cur.execute('DELETE FROM jobs WHERE job_name = ? AND company_name = ?', (del_job, del_job2) )
+            con.commit()
 
                 
         
