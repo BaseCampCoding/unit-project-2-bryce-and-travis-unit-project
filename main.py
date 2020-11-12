@@ -158,30 +158,72 @@ def admin():
 
             while True:    
                 one_user = input("What user so you want information for? ")
+                if one_user == "none":
+                    break
                 cur.execute('SELECT name FROM person WHERE name = ?', (one_user,))
                 isuser = cur.fetchall()
+                
                 if isuser == []:
                     print(f"We don't have a user by the name of {one_user}.")
                 elif isuser != []:
                     cur.execute('SELECT * FROM person WHERE name = ?', (one_user,))
                     print(cur.fetchone())
         elif admin_input == "add jobs":
+            schedule = ["full-time", "part-time"]
             j_name = input("What is the name of the position? ")
             com_name = input("What is the company's name? ")
             j_description = input("What is the job description? ")
             salary = input("What is the salary for this job? ")
+
             job_type = input("Is this job full-time or part-time? ")
+            while job_type not in schedule:
+                print("part-time or full-time only")
+                job_type = input("Is this job full-time or part-time? ")
+                if job_type in schedule:
+                    break
+
             hours = input("What is the schedule for this job? ")
             req = input("What are the requirements for this job? ")
-            located = input("Where is this job located? ")
+
+            located = input("What state is this job located? ").upper()
+            cur.execute('SELECT st_name FROM States WHERE st_name = ? or abbreviation = ?', (located, located))
+            state_check = cur.fetchall()
+            while state_check == []:
+                print("Please check spelling.")
+                located = input("What state is this job located? ").upper()
+                cur.execute('SELECT st_name FROM States WHERE st_name = ? or abbreviation = ?', (located, located))
+                state_check = cur.fetchall()
+                if state_check != []:
+                    break
+
             
 
             cur.execute('INSERT INTO jobs VALUES (?, ?, ?, ?, ?, ?, ?, ?)', (j_name, com_name, j_description, salary, job_type, hours, req, located))
             con.commit()
         elif admin_input == "delete jobs":
+            
             del_job = input("What is the position name? ")
+            cur.execute('SELECT job_name FROM jobs WHERE job_name = ?', (del_job,))
+            job_list = cur.fetchall()
+            while job_list == []:
+                print("We don't have that job listed.")
+                del_job = input("What is the position name? ")
+                cur.execute('SELECT job_name FROM jobs WHERE job_name = ?', (del_job,))
+                job_list = cur.fetchone()
+                if job_list != []:
+                    break
+               
             del_job2 = input("What is the company's name? ")
 
+            cur.execute('SELECT company_name FROM jobs WHERE company_name = ?', (del_job2,))
+            job_list = cur.fetchone()
+            while job_list == []:
+                print("We don't have that job listed.")
+                del_job = input("What is the position name? ")
+                cur.execute('SELECT company_name FROM jobs WHERE company_name = ?', (del_job2,))
+                job_list = cur.fetchone()
+                if job_list != []:
+                    break
             cur.execute('DELETE FROM jobs WHERE job_name = ? AND company_name = ?', (del_job, del_job2) )
             con.commit()
 
@@ -313,6 +355,11 @@ Do you want to
                 cur.execute('SELECT st_name FROM States WHERE abbreviation = ?', (place,))
                 fetch_state = cur.fetchall()
                 state_name = fetch_state[0][0]
+            else: 
+                cur.execute('SELECT st_name FROM States WHERE st_name = ?', (place,))
+                fetch_state = cur.fetchall()
+                state_name = fetch_state[0][0]
+
         
 
             job = None
