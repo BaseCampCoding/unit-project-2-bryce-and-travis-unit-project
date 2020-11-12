@@ -220,6 +220,7 @@ Do you want to
     
     elif sign_in == "sign up":
         while True:
+            admin = False
             name = input("Full name: ").lower()
             if name == "quit":
                 break
@@ -293,8 +294,8 @@ Do you want to
             password = input("Please enter a password for your account: ")
             if password == "quit":
                 break
-            admin = False
-            cur.execute('INSERT INTO log_in VALUES (?, ?, ?)', (name, username, password, admin))
+            
+            cur.execute('INSERT INTO Log_in VALUES (?, ?, ?, ?)', (name, username, password, admin))
             cur.execute('INSERT INTO Person VALUES (?, ?, ?, ?, ?, ?, ?)', (name, age, email, str(cell), str(state_name), job, gender))
             con.commit()
             break
