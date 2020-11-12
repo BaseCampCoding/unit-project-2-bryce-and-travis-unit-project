@@ -10,11 +10,7 @@ cur.execute("CREATE TABLE IF NOT EXISTS Log_in (Name TEXT, Username TEXT, Passwo
 
 cur.execute(''' INSERT INTO Log_in VALUES ("Travis Alexander", "TravisA", "blah", True), ("Bryce Taylor", "BLT21", "1234", True)''')
 
-ADMIN = []
-with open("admin.json") as admin_file:
-    READER = json.load(admin_file)
-    for entry in READER:
-        ADMIN.append([entry["name"], entry["password"]])
+
 
 class User:
     def __init__ (self, username, password):
