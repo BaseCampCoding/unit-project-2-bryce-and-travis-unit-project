@@ -173,7 +173,8 @@ def admin():
             j_name = input("What is the name of the position? ")
             com_name = input("What is the company's name? ")
             j_description = input("What is the job description? ")
-            salary = input("What is the salary for this job? ")
+            salary = input("What is the salary for this job? ") 
+            
 
             job_type = input("Is this job full-time or part-time? ")
             while job_type not in schedule:
