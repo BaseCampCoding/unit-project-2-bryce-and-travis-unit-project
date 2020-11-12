@@ -1,6 +1,6 @@
 import json
 from storing import *
-import pprint
+from pprint import pprint
 import PySimpleGUI as gui
 
 def application():
@@ -8,12 +8,40 @@ def application():
     c = input("Is there anything that you want to change in your profile?[Y/N] ").lower
     if c == "y":
         print
-
-
+def look_for_job():
+    cur.execute('SELECT DISTINCT Job_name FROM Jobs') # Distinct only selects a value once
+    for job in cur.fetchall():
+        print(f'- {job[0]}')
+    p = input("What job do you want to pick? ")
+    questions = ["company_name", "description", "salary", "job_type", "schedule", "experience", "location"]
+    while True:
+        user_question = input("""
+    What do you want to know about this job?
+    -Company_Name
+    -Description
+    -Salary
+    -Job_Type
+    -Schedule
+    -Experiece
+    -Location
+    If you are done looking type "quit"
+    """).lower()
+        if user_question in questions:
+            index = questions.index(user_question)
+            cur.execute(f'SELECT DISTINCT {questions[index]} FROM Jobs WHERE job_name = ?', (p,))
+            job_des = cur.fetchall()
+            print(job_des[0][0])
+        elif user_question == "quit":
+            y = input("Do you want to put this job in your profile? [Y/N] ")
+            if y =="y":
+                job = p
+                break
+            elif x == "n":
+                break
     
 
 def Employee():
-    user_options = ["view jobs", "update profile"]
+    user_options = ["view jobs", "update profile", "application"]
     choice = input("""
     Do you want to
         -View Jobs
@@ -71,6 +99,29 @@ def Employee():
 
     elif choice == "update profile":
         print("updated")
+        look_for_job()
+
+    elif choice == "update profile":
+        while True:
+            print("""
+- Full Name
+- Age
+- Email
+- Phone Number
+- Place
+- Job
+- Gender
+""")
+            change = input("What do you want to change?(If not type 'quit') ").lower()
+            cc = ["full name", "age", "email", "phone number", "place", "gender"]
+            if change in cc:
+                new_change = input(f"What do you want to change in {change}? ")
+                cur.execute(f'UPDATE Person SET {change} = {new_change} WHERE name = ?', (name, ))
+            elif change == 'job':
+                look_for_job()
+            elif change  == "quit":
+                break
+        
 
 
 def admin():
@@ -175,9 +226,11 @@ while True:
         if password == "quit":
             break
         if log.is_valid:
-            cur.execute('SELECT name FROM log_in WHERE username = ?', (username,))
-            fetch_name = cur.fetchone()
-            print(f"Welcome {fetch_name[0]}")
+            cur.execute('SELECT Name FROM log_in WHERE Username = ?', (username,))
+            name = cur.fetchone()
+            #while row in one:
+            #    print(row)
+            print(f"Welcome {name[0]}")
             Employee()
             break
         else:
