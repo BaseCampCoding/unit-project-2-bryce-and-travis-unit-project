@@ -32,7 +32,7 @@ class Admin:
     def __str__(self):
         return self.log_in
 
-print(ADMIN)
+# print(ADMIN)
 
 cur.execute("CREATE TABLE IF NOT EXISTS Jobs(job_name TEXT, company_name TEXT, description TEXT, salary TEXT, job_type TEXT, schedule TEXT,  experience TEXT, location TEXT)")
 
@@ -106,7 +106,7 @@ for state in states:
 
 
 
-if __name__ == "__main__":
-    from pprint import pprint
-    cur.execute('SELECT * FROM Person')
-    pprint(cur.fetchall())
+# if __name__ == "__main__":
+#     from pprint import pprint
+#     cur.execute('SELECT * FROM Person')
+#     pprint(cur.fetchall())

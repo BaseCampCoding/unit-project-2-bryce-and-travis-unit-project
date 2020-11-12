@@ -150,7 +150,7 @@ def admin():
         
         if admin_input == "view jobs":
             
-            cur.execute('SELECT name FROM Jobs')
+            cur.execute('SELECT job_name FROM Jobs')
             jobs = cur.fetchall()
             for j in jobs:
                 print(j[0])
@@ -182,6 +182,8 @@ def admin():
                     print(cur.fetchone())
         elif admin_input == "add jobs":
             j_name = input("What is the name of the position? ")
+            com_name = input("What is the company's name? ")
+            j_description = input("What is the job description? ")
             
 
                 
