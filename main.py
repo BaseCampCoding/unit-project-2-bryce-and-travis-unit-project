@@ -132,14 +132,14 @@ def look_for_job():
             break
         else:
             print("That job doesn't exist")
-    questions = ["company_name", "description", "salary", "job_type", "schedule", "experience", "location"]
+    questions = ["company name", "description", "salary", "job type", "schedule", "experience", "location"]
     while True:
         user_question = input("""
 What do you want to know about this job?
--Company_Name
+-Company Name
 -Description
 -Salary
--Job_Type
+-Job Type
 -Schedule
 -Experiece
 -Location
