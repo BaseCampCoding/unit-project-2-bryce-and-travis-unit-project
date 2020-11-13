@@ -57,6 +57,8 @@ def Employee():
     Do you want to
         -View Jobs
         -Update Profile
+        -Application
+        -Sign Out
         """).lower()
         while choice not in user_options:
             print(f"{choice} is not a valid option.")
@@ -64,6 +66,8 @@ def Employee():
     Do you want to
         -View Jobs
         -Update Profile
+        -Application
+        -Sign Out
         """).lower()
             if choice in user_options:
                 
