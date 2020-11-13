@@ -449,7 +449,7 @@ Do you want to
         if log.is_valid:
             cur.execute('SELECT Name FROM log_in WHERE Username = ?', (username,))
             name = cur.fetchone()
-            print(f"Welcome {name[0].capitalize()}")
+            print(f"\nWelcome {name[0].capitalize()}")
             Employee()
         else:
             print("This account doesn't exist.")
