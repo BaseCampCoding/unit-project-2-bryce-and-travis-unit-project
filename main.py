@@ -28,9 +28,9 @@ def look_for_job():
     """).lower()
         if user_question in questions:
             index = questions.index(user_question)
-            cur.execute(f'SELECT DISTINCT {questions[index]} FROM Jobs WHERE job_name = ?', (p,))
-            job_des = cur.fetchall()
-            print(job_des[0][0])
+            cur.execute(f'SELECT DISTINCT {user_question} FROM Jobs WHERE job_name = ?', (p,))
+            job_des = cur.fetchone()
+            print(job_des[0])
         elif user_question == "quit":
             y = input("Do you want to put this job in your profile? [Y/N] ")
             if y =="y":
