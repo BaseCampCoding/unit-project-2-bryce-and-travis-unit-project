@@ -562,45 +562,4 @@ Do you want to
     elif sign_in == "quit":
         break
        
-print("-")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# def job_application():
-#     do you want to apply? [y/n]
-
-#     if yes:
-#         do you need to change any of your personal information before it is sent?
-#         if yes:
-#            change =  what do you want to change?
-#             phone number
-#             new_change enter your number.
-
-#             UPDATE person SET change = ?), (new_change,))
+print("Goodbye")
