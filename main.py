@@ -126,7 +126,12 @@ def look_for_job():
     cur.execute('SELECT DISTINCT Job_name FROM Jobs') # Distinct only selects a value once
     for job in cur.fetchall():
         print(f'- {job[0]}')
-    p = input("What job do you want to pick? ")
+    while True:
+        p = input("What job do you want to pick? ")
+        if p in job:
+            break
+        else:
+            print("That job doesn't exist")
     questions = ["company_name", "description", "salary", "job_type", "schedule", "experience", "location"]
     while True:
         user_question = input("""
@@ -148,20 +153,28 @@ If you are done looking type "quit"
         elif user_question == "quit":
             y = input("Do you want to put this job in your profile? [Y/N] ")
             if y =="y":
+                    
+                z = input("Do you want to add a application to this job? [Y/N]").lower()
+                if z == 'y':
+                    application()
+                    pass
+                else:
+                    pass
                 job = p
                 break
-            elif x == "n":
+            elif y == "n":
                 break
+            else:
+                print("Please use Y/N")
     
 
 def Employee():
     while True:
-        user_options = ["view jobs", "update profile", "application", "sign out"]
+        user_options = ["view jobs", "update profile", "sign out"]
         choice = input("""
 Do you want to
     -View Jobs 
     -Update Profile 
-    -Application
     -Sign Out
     """).lower()
         while choice not in user_options:
@@ -170,7 +183,6 @@ Do you want to
 Do you want to
     -View Jobs
     -Update Profile
-    -Application
     -Sign Out
     """).lower()
             if choice in user_options:
@@ -181,9 +193,6 @@ Do you want to
             look_for_job()
         elif choice == "sign out":
             break
-        elif choice == "application":
-            application()
-
         elif choice == "update profile":
             while True:
                 cur.execute('SELECT name FROM log_in WHERE username =?', (username,))
@@ -553,7 +562,7 @@ Do you want to
     elif sign_in == "quit":
         break
        
-print(2+2)
+print("-")
 
 
 
