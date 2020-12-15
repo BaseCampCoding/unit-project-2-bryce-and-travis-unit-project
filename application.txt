@@ -1,0 +1,14 @@
+Application
+----------------------
+Name: mike james
+Age: 30
+Email: Mike@gmail.com
+Phone Number: 2749285873
+Place: MISSISSIPPI
+Job: None
+Gender: other
+----------------------
+Why do you want this job?
+I want this job because I am a fit of this job.
+------------------------------------        
+        

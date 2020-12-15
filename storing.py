@@ -38,9 +38,9 @@ cur.execute("CREATE TABLE IF NOT EXISTS Jobs(job_name TEXT, company_name TEXT, d
 
 
 cur.execute('''INSERT INTO Jobs VALUES 
-        ("Robotics Automation Engineer", "Noble Plastics Inc.", "Automation engineers develop robust system designs and programs for external and internal customers. Noble continually invests in new technology and training to ensure our team has access to the best tools.", "$60,000 - $75,000 a year", "Full-time", "None", "Robotics: 2 years (Preferred)", "Mississippi"),
-        ("Plant Electrician", "Express Grain Terminals, LLC", "Industrial Electricians install, maintain, and repair electrical equipment and parts, such as control panels, check switches, motors, Starters, VFDs, and other parts of an industrial electrical system.", "$23 - $30 an hour", "Full-time", "8 hour shift", "Industrial electrician experience: 5 years (Preferred)", "Greenwood, MS 38930"),
-        ("Full Stack Developer", "Power Fusion Media", "The Software Developer is responsible for creating new SQL databases as well as developing new software and mobile applications and monitoring current software and internal systems.", "$75,000 - $85,000 a year", "Full time", "10 - 12 hour shift", "Two years of experience as a Developer or related", "Memphis, TN")
+        ("robotics automation engineer", "Noble Plastics Inc.", "Automation engineers develop robust system designs and programs for external and internal customers. Noble continually invests in new technology and training to ensure our team has access to the best tools.", "$60,000 - $75,000 a year", "Full-time", "None", "Robotics: 2 years (Preferred)", "Mississippi"),
+        ("plant electrician", "Express Grain Terminals, LLC", "Industrial Electricians install, maintain, and repair electrical equipment and parts, such as control panels, check switches, motors, Starters, VFDs, and other parts of an industrial electrical system.", "$23 - $30 an hour", "Full-time", "8 hour shift", "Industrial electrician experience: 5 years (Preferred)", "Greenwood, MS 38930"),
+        ("full stack developer", "Power Fusion Media", "The Software Developer is responsible for creating new SQL databases as well as developing new software and mobile applications and monitoring current software and internal systems.", "$75,000 - $85,000 a year", "Full time", "10 - 12 hour shift", "Two years of experience as a Developer or related", "Memphis, TN")
         ''')
 
 
