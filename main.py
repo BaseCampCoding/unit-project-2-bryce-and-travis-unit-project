@@ -30,7 +30,7 @@ def look_for_job():
             index = questions.index(user_question)
             cur.execute(f'SELECT DISTINCT {questions[index]} FROM Jobs WHERE job_name = ?', (p,))
             job_des = cur.fetchall()
-            print(job_des[0][0])
+            print(job_des[0])
         elif user_question == "quit":
             y = input("Do you want to put this job in your profile? [Y/N] ")
             if y =="y":
@@ -62,6 +62,9 @@ Do you want to
         look_for_job()
 
     elif choice == "update profile":
+        cur.execute('SELECT name FROM log_in WHERE username =?', (username,))
+        per_name = cur.fetchone()
+        users_name = per_name[0]
         while True:
             print("""
 - Full Name
@@ -87,7 +90,7 @@ Do you want to
                     new_change = int(new_change)
                 else:
                     print("Please enter a numerical value.")
-                cur.execute('UPDATE Person SET age = ? WHERE name = ?', (new_change, name))
+                cur.execute('UPDATE Person SET age = ? WHERE name = ?', (new_change, users_name))
                 con.commit()
             elif change == "email":
                 while True:
@@ -97,14 +100,53 @@ Do you want to
                     if emails != []:
                         print("That email is already being used!")
                     elif emails == []:
-                        cur.execute('UPDATE Person SET email = ? WHERE name = ?', (new_change, name))
+                        cur.execute('UPDATE Person SET email = ? WHERE name = ?', (new_change, users_name))
+                        break
+                con.commit()
+            elif change == "phone number":
+                while True:
+                    new_change = input(f"What do you want to change in {change}? ")
+                    if new_change.isdigit() and len(list(new_change)) == 10:
+                        new_change = int(new_change)
+                        cur.execute('UPDATE Person SET phone_number = ? WHERE name = ?', (new_change, users_name))
                         con.commit()
                         break
-                
+                    else:
+                        print("Please enter a 10 digit cell phone number.")
+            elif change == "place":
+                new_change = input(f"What do you want to change in {change}? ").upper()
+
+                cur.execute('SELECT st_name FROM States WHERE st_name = ? or abbreviation = ?', (new_change, new_change))
+                state_check = cur.fetchall()
+                while state_check == []:
+                    print("Please check spelling.")
+                    new_change = input("What state do you live in now: ").upper()
+                    cur.execute('SELECT st_name FROM States WHERE st_name = ? or abbreviation = ?', (new_change, new_change))
+                    state_check = cur.fetchall()
+                    if state_check != []:
+                        break
+                if len(list(new_change)) == 2:
+                    cur.execute('SELECT st_name FROM States WHERE abbreviation = ?', (new_change,))
+                    fetch_state = cur.fetchall()
+                    state_name = fetch_state[0][0]
+                else: 
+                    cur.execute('SELECT st_name FROM States WHERE st_name = ?', (new_change,))
+                    fetch_state = cur.fetchall()
+                    state_name = fetch_state[0][0]
+                cur.execute('UPDATE Person SET place = ? WHERE name = ?', (new_change, users_name))
+                con.commit()
             elif change == 'job':
                 look_for_job()
+            elif change == 'gender':
+                new_change = input(f"What do you want to change in {change}? ")
+                if new_change != "male" and new_change != "female":
+                    new_change = "other"
+                cur.execute('UPDATE Person SET gender = ? WHERE name = ?', (new_change, users_name))
+                con.commit()
             elif change  == "quit":
                 break
+            else:
+                print(f"There is not {change} in the list.")
         
 
 
