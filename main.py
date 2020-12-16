@@ -147,8 +147,8 @@ If you are done looking type "quit"
     """).lower()
         if user_question in questions:
             index = questions.index(user_question)
-            cur.execute(f'SELECT DISTINCT {user_question} FROM Jobs WHERE job_name = ?', (p,))
-            job_des = cur.fetchone()
+            cur.execute(f'SELECT DISTINCT {questions[index]} FROM Jobs WHERE job_name = ?', (p,))
+            job_des = cur.fetchall()
             print(job_des[0])
         elif user_question == "quit":
             y = input("Do you want to put this job in your profile? [Y/N] ")
@@ -185,101 +185,191 @@ Do you want to
     -Update Profile
     -Sign Out
     """).lower()
-            if choice in user_options:
-                
-                break
-        
-        if choice == "view jobs":
-            look_for_job()
-        elif choice == "sign out":
+        if choice in user_options:
+            
             break
-        elif choice == "update profile":
-            while True:
-                cur.execute('SELECT name FROM log_in WHERE username =?', (username,))
-                per_name = cur.fetchone()
-                users_name = per_name[0]
-                print("""
-    - Full Name
-    - Age
-    - Email
-    - Phone Number
-    - Place
-    - Job
-    - Gender
-    """)
-                change = input("What do you want to change?(If not type 'quit') ").lower()
-                ["full name", "age", "email", "phone number", "place", "gender"]
-                if change == "full name":
-                    new_change = input(f"What do you want to change in {change}? ")
-                    cur.execute('SELECT person.name FROM Person JOIN Log_in WHERE log_in.username = ?', (username,))
-                    name_check = cur.fetchone()
-                    old_name = name_check[0]
-                    cur.execute('UPDATE Person SET name = ? WHERE name = ?', (new_change, old_name))
-                    con.commit()
-                elif change == "age":
-                    new_change = input(f"What do you want to change in {change}? ")
-                    if new_change.isdigit():
-                        new_change = int(new_change)
-                    else:
-                        print("Please enter a numerical value.")
-                    cur.execute('UPDATE Person SET age = ? WHERE name = ?', (new_change, users_name))
-                    con.commit()
-                elif change == "email":
-                    while True:
-                        new_change = input(f"What do you want to change in {change}? ")
-                        cur.execute('SELECT email FROM Person WHERE email = ?', (new_change,))
-                        emails = cur.fetchall()
-                        if emails != []:
-                            print("That email is already being used!")
-                        elif emails == []:
-                            cur.execute('UPDATE Person SET email = ? WHERE name = ?', (new_change, users_name))
-                            break
-                    con.commit()
-                elif change == "phone number":
-                    while True:
-                        new_change = input(f"What do you want to change in {change}? ")
-                        if new_change.isdigit() and len(list(new_change)) == 10:
-                            new_change = int(new_change)
-                            cur.execute('UPDATE Person SET phone_number = ? WHERE name = ?', (new_change, users_name))
-                            con.commit()
-                            break
-                        else:
-                            print("Please enter a 10 digit cell phone number.")
-                elif change == "place":
-                    new_change = input(f"What state do you live in now: ").upper()
+    
+    if choice == "view jobs":
+        look_for_job()
 
+    elif choice == "update profile":
+        cur.execute('SELECT name FROM log_in WHERE username =?', (username,))
+        per_name = cur.fetchone()
+        users_name = per_name[0]
+        while True:
+            print("""
+- Full Name
+- Age
+- Email
+- Phone Number
+- Place
+- Job
+- Gender
+""")
+            change = input("What do you want to change?(If not type 'quit') ").lower()
+            ["full name", "age", "email", "phone number", "place", "gender"]
+            if change == "full name":
+                new_change = input(f"What do you want to change in {change}? ")
+                cur.execute('SELECT person.name FROM Person JOIN Log_in WHERE log_in.username = ?', (username,))
+                name_check = cur.fetchone()
+                old_name = name_check[0]
+                cur.execute('UPDATE Person SET name = ? WHERE name = ?', (new_change, old_name))
+                con.commit()
+            elif change == "age":
+                new_change = input(f"What do you want to change in {change}? ")
+                if new_change.isdigit():
+                    new_change = int(new_change)
+                else:
+                    print("Please enter a numerical value.")
+                cur.execute('UPDATE Person SET age = ? WHERE name = ?', (new_change, users_name))
+                con.commit()
+            elif change == "email":
+                while True:
+                    new_change = input(f"What do you want to change in {change}? ")
+                    cur.execute('SELECT email FROM Person WHERE email = ?', (new_change,))
+                    emails = cur.fetchall()
+                    if emails != []:
+                        print("That email is already being used!")
+                    elif emails == []:
+                        cur.execute('UPDATE Person SET email = ? WHERE name = ?', (new_change, users_name))
+                        break
+                con.commit()
+            elif change == "phone number":
+                while True:
+                    new_change = input(f"What do you want to change in {change}? ")
+                    if new_change.isdigit() and len(list(new_change)) == 10:
+                        new_change = int(new_change)
+                        cur.execute('UPDATE Person SET phone_number = ? WHERE name = ?', (new_change, users_name))
+                        con.commit()
+                        break
+                    else:
+                        print("Please enter a 10 digit cell phone number.")
+            elif change == "place":
+                new_change = input(f"What do you want to change in {change}? ").upper()
+
+                cur.execute('SELECT st_name FROM States WHERE st_name = ? or abbreviation = ?', (new_change, new_change))
+                state_check = cur.fetchall()
+                while state_check == []:
+                    print("Please check spelling.")
+                    new_change = input("What state do you live in now: ").upper()
                     cur.execute('SELECT st_name FROM States WHERE st_name = ? or abbreviation = ?', (new_change, new_change))
                     state_check = cur.fetchall()
-                    while state_check == []:
-                        print("Please check spelling.")
-                        new_change = input("What state do you live in now: ").upper()
+                    if state_check != []:
+                        break
+                if len(list(new_change)) == 2:
+                    cur.execute('SELECT st_name FROM States WHERE abbreviation = ?', (new_change,))
+                    fetch_state = cur.fetchall()
+                    state_name = fetch_state[0][0]
+                else: 
+                    cur.execute('SELECT st_name FROM States WHERE st_name = ?', (new_change,))
+                    fetch_state = cur.fetchall()
+                    state_name = fetch_state[0][0]
+                cur.execute('UPDATE Person SET place = ? WHERE name = ?', (new_change, users_name))
+                con.commit()
+            elif change == 'job':
+                look_for_job()
+            elif change == 'gender':
+                new_change = input(f"What do you want to change in {change}? ")
+                if new_change != "male" and new_change != "female":
+                    new_change = "other"
+                cur.execute('UPDATE Person SET gender = ? WHERE name = ?', (new_change, users_name))
+                con.commit()
+            elif change  == "quit":
+                break
+            else:
+                print(f"There is not {change} in the list.")
+        
+            if choice == "view jobs":
+                look_for_job()
+            elif choice == "sign out":
+                break
+            elif choice == "update profile":
+                while True:
+                    cur.execute('SELECT name FROM log_in WHERE username =?', (username,))
+                    per_name = cur.fetchone()
+                    users_name = per_name[0]
+                    print("""
+        - Full Name
+        - Age
+        - Email
+        - Phone Number
+        - Place
+        - Job
+        - Gender
+        """)
+                    change = input("What do you want to change?(If not type 'quit') ").lower()
+                    ["full name", "age", "email", "phone number", "place", "gender"]
+                    if change == "full name":
+                        new_change = input(f"What do you want to change in {change}? ")
+                        cur.execute('SELECT person.name FROM Person JOIN Log_in WHERE log_in.username = ?', (username,))
+                        name_check = cur.fetchone()
+                        old_name = name_check[0]
+                        cur.execute('UPDATE Person SET name = ? WHERE name = ?', (new_change, old_name))
+                        con.commit()
+                    elif change == "age":
+                        new_change = input(f"What do you want to change in {change}? ")
+                        if new_change.isdigit():
+                            new_change = int(new_change)
+                        else:
+                            print("Please enter a numerical value.")
+                        cur.execute('UPDATE Person SET age = ? WHERE name = ?', (new_change, users_name))
+                        con.commit()
+                    elif change == "email":
+                        while True:
+                            new_change = input(f"What do you want to change in {change}? ")
+                            cur.execute('SELECT email FROM Person WHERE email = ?', (new_change,))
+                            emails = cur.fetchall()
+                            if emails != []:
+                                print("That email is already being used!")
+                            elif emails == []:
+                                cur.execute('UPDATE Person SET email = ? WHERE name = ?', (new_change, users_name))
+                                break
+                        con.commit()
+                    elif change == "phone number":
+                        while True:
+                            new_change = input(f"What do you want to change in {change}? ")
+                            if new_change.isdigit() and len(list(new_change)) == 10:
+                                new_change = int(new_change)
+                                cur.execute('UPDATE Person SET phone_number = ? WHERE name = ?', (new_change, users_name))
+                                con.commit()
+                                break
+                            else:
+                                print("Please enter a 10 digit cell phone number.")
+                    elif change == "place":
+                        new_change = input(f"What state do you live in now: ").upper()
+
                         cur.execute('SELECT st_name FROM States WHERE st_name = ? or abbreviation = ?', (new_change, new_change))
                         state_check = cur.fetchall()
-                        if state_check != []:
-                            break
-                    if len(list(new_change)) == 2:
-                        cur.execute('SELECT st_name FROM States WHERE abbreviation = ?', (new_change,))
-                        fetch_state = cur.fetchall()
-                        state_name = fetch_state[0][0]
-                    else: 
-                        cur.execute('SELECT st_name FROM States WHERE st_name = ?', (new_change,))
-                        fetch_state = cur.fetchall()
-                        state_name = fetch_state[0][0]
-                    cur.execute('UPDATE Person SET place = ? WHERE name = ?', (state_name, users_name))
-                    con.commit()
-                elif change == 'job':
-                    look_for_job()
-                elif change == 'gender':
-                    new_change = input(f"What do you want to change in {change}? ")
-                    if new_change != "male" and new_change != "female":
-                        new_change = "other"
-                    cur.execute('UPDATE Person SET gender = ? WHERE name = ?', (new_change, users_name))
-                    con.commit()
-                elif change  == "quit":
-                    break
-                else:
-                    print(f"There is not {change} in the list.")
-        
+                        while state_check == []:
+                            print("Please check spelling.")
+                            new_change = input("What state do you live in now: ").upper()
+                            cur.execute('SELECT st_name FROM States WHERE st_name = ? or abbreviation = ?', (new_change, new_change))
+                            state_check = cur.fetchall()
+                            if state_check != []:
+                                break
+                        if len(list(new_change)) == 2:
+                            cur.execute('SELECT st_name FROM States WHERE abbreviation = ?', (new_change,))
+                            fetch_state = cur.fetchall()
+                            state_name = fetch_state[0][0]
+                        else: 
+                            cur.execute('SELECT st_name FROM States WHERE st_name = ?', (new_change,))
+                            fetch_state = cur.fetchall()
+                            state_name = fetch_state[0][0]
+                        cur.execute('UPDATE Person SET place = ? WHERE name = ?', (state_name, users_name))
+                        con.commit()
+                    elif change == 'job':
+                        look_for_job()
+                    elif change == 'gender':
+                        new_change = input(f"What do you want to change in {change}? ")
+                        if new_change != "male" and new_change != "female":
+                            new_change = "other"
+                        cur.execute('UPDATE Person SET gender = ? WHERE name = ?', (new_change, users_name))
+                        con.commit()
+                    elif change  == "quit":
+                        break
+                    else:
+                        print(f"There is not {change} in the list.")
+            
 
 
 def admin():
@@ -292,6 +382,7 @@ def admin():
         - View Users
         - Add Jobs
         - Delete Jobs
+        - New Admin
     """).lower()
         
         while admin_input not in admin_options:
@@ -345,12 +436,21 @@ def admin():
         elif admin_input == "add jobs":
             schedule = ["full-time", "part-time"]
             j_name = input("What is the name of the position? ")
+            if j_name == "quit":
+                break
             com_name = input("What is the company's name? ")
+            if com_name == "quit":
+                break
             j_description = input("What is the job description? ")
+            if j_description == "quit":
+                break
             salary = input("What is the salary for this job? ") 
-
+            if salary == "quit":
+                break
 
             job_type = input("Is this job full-time or part-time? ")
+            if job_type == "quit":
+                break
             while job_type not in schedule:
                 print("part-time or full-time only")
                 job_type = input("Is this job full-time or part-time? ")
@@ -358,9 +458,15 @@ def admin():
                     break
 
             hours = input("What is the schedule for this job? ")
+            if hours == "quit":
+                break
             req = input("What are the requirements for this job? ")
+            if req == "quit":
+                break
 
             located = input("What state is this job located? ").upper()
+            if located == "QUIT":
+                break
             cur.execute('SELECT st_name FROM States WHERE st_name = ? or abbreviation = ?', (located, located))
             state_check = cur.fetchall()
             while state_check == []:
@@ -378,17 +484,22 @@ def admin():
         elif admin_input == "delete jobs":
             
             del_job = input("What is the position name? ")
+            if del_job == "quit":
+                break
             cur.execute('SELECT job_name FROM jobs WHERE job_name = ?', (del_job,))
             job_list = cur.fetchall()
+            
             while job_list == []:
                 print("We don't have that job listed.")
                 del_job = input("What is the position name? ")
                 cur.execute('SELECT job_name FROM jobs WHERE job_name = ?', (del_job,))
-                job_list = cur.fetchone()
+                job_list = cur.fetchall()
                 if job_list != []:
                     break
                
             del_job2 = input("What is the company's name? ")
+            if del_job2 == "quit":
+                break
 
             cur.execute('SELECT company_name FROM jobs WHERE company_name = ?', (del_job2,))
             job_list = cur.fetchone()
@@ -401,8 +512,20 @@ def admin():
                     break
             cur.execute('DELETE FROM jobs WHERE job_name = ? AND company_name = ?', (del_job, del_job2) )
             con.commit()
-
-                
+        
+        if admin_input == "new admin":
+            pick_user = input("Enter the username for the user you want to give admin: ")
+            cur.execute('SELECT username FROM log_in WHERE username = ?', (pick_user,))
+            isuser = cur.fetchall()
+            while isuser == []:
+                print("That user doesn't exist.")
+                pick_user = input("Enter the username for the user you want to give admin: ")
+                cur.execute('SELECT username FROM log_in WHERE username = ?', (pick_user,))
+                isuser = cur.fetchall()
+                if isuser != []:
+                    break
+            cur.execute('UPDATE log_in SET admin = TRUE WHERE username = ?', (pick_user,))
+            con.commit()
         
         elif admin_input == "sign out":
             break
